@@ -44,9 +44,9 @@
 
 * [Examples Overview](examples/README.md)
 * [Basic Examples](examples/basic.md)
+* [Advanced Examples](examples/advanced.md)
 * [Custom Plugin Example](examples/custom-plugin.md)
-* [Next.js Example](examples/nextjs.md)
-* [Advanced Usage](examples/advanced.md)
+* [Next.js Integration](examples/nextjs.md)
 
 ## Contributing
 

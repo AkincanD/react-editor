@@ -27,7 +27,9 @@
   * [Publishing Your Plugin](plugins/publishing-plugins.md)
 
 * Examples
-  * [Basic Example](examples/basic.md)
+  * [Examples Overview](examples/README.md)
+  * [Basic Examples](examples/basic.md)
+  * [Advanced Examples](examples/advanced.md)
   * [Custom Plugin](examples/custom-plugin.md)
   * [Next.js Integration](examples/nextjs.md)
 
