@@ -217,7 +217,7 @@ const VideoModal: React.FC<{
 };
 
 // Video plugin state
-let videoModalState: {
+const videoModalState: {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   insertContent: ((html: string) => void) | null;

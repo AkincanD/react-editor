@@ -97,7 +97,7 @@ const LinkModal: React.FC<{
 };
 
 // Link plugin state
-let linkModalState: {
+const linkModalState: {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   insertLink: ((url: string, text: string) => void) | null;
