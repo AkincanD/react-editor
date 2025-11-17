@@ -2,7 +2,7 @@
 
 A powerful, extensible, and beautiful rich text editor for React with TypeScript support.
 
-[![npm version](https://badge.fury.io/akincan/react-editor.svg)](https://badge.fury.io/js/react-editor)
+[![npm version](https://badge.fury.io/js/@akincand%2Freact-editor.svg)](https://badge.fury.io/js/@akincand%2Freact-editor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features
