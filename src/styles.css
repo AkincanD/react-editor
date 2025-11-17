@@ -34,8 +34,7 @@
 }
 
 .react-editor-content-editable {
-  @apply outline-none min-h-full;
-  @apply prose dark:prose-invert max-w-none;
+  @apply outline-none min-h-full max-w-none;
 }
 
 .react-editor-content-editable:empty:before {
