@@ -5,10 +5,11 @@ import { ToolbarButton as ToolbarButtonType } from '../types';
 interface ToolbarProps {
   buttons?: ToolbarButtonType[];
   className?: string;
+  showSourceButton?: boolean;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({ buttons: customButtons, className = '' }) => {
-  const { toolbarButtons, execCommand } = useEditor();
+export const Toolbar: React.FC<ToolbarProps> = ({ buttons: customButtons, className = '', showSourceButton = false }) => {
+  const { toolbarButtons, execCommand, viewSource, toggleViewSource } = useEditor();
 
   const buttons = customButtons || toolbarButtons;
 
@@ -36,16 +37,16 @@ export const Toolbar: React.FC<ToolbarProps> = ({ buttons: customButtons, classN
   });
 
   return (
-    <div className={`react-editor-toolbar ${className}`}>
+    <div className={`reactEditor_toolbar ${className}`}>
       {Object.entries(groupedButtons).map(([group, groupButtons], index) => (
         <React.Fragment key={group}>
-          {index > 0 && <div className="react-editor-toolbar-separator" />}
+          {index > 0 && <div className="reactEditor_toolbarSeparator" />}
           {groupButtons.map(button => {
             const isActive = button.isActive ? button.isActive() : false;
             return (
               <button
                 key={button.id}
-                className={`react-editor-toolbar-button ${isActive ? 'active' : ''}`}
+                className={`reactEditor_toolbarButton ${isActive ? 'reactEditor_active' : ''}`}
                 onClick={() => handleButtonClick(button)}
                 title={button.title || button.label}
                 disabled={button.disabled}
@@ -57,6 +58,28 @@ export const Toolbar: React.FC<ToolbarProps> = ({ buttons: customButtons, classN
           })}
         </React.Fragment>
       ))}
+      {showSourceButton && (
+        <>
+          <div className="reactEditor_toolbarSeparator" />
+          <button
+            className={`reactEditor_toolbarButton ${viewSource ? 'reactEditor_active' : ''}`}
+            onClick={toggleViewSource}
+            title={viewSource ? 'Visual Editor' : 'View Source'}
+            type="button"
+          >
+            {viewSource ? (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M1 4h14v8H1V4zm1 1v6h12V5H2z"/>
+                <path d="M4 7h8v1H4V7zm0 2h6v1H4V9z"/>
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M5.854 4.854a.5.5 0 1 0-.708-.708l-3.5 3.5a.5.5 0 0 0 0 .708l3.5 3.5a.5.5 0 0 0 .708-.708L2.707 8l3.147-3.146zm4.292 0a.5.5 0 0 1 .708-.708l3.5 3.5a.5.5 0 0 1 0 .708l-3.5 3.5a.5.5 0 0 1-.708-.708L13.293 8l-3.147-3.146z"/>
+              </svg>
+            )}
+          </button>
+        </>
+      )}
     </div>
   );
 };

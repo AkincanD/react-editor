@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { EditorProvider, useEditor } from '../context/EditorContext';
 import { Toolbar } from './Toolbar';
 import { EditorContent } from './EditorContent';
@@ -23,7 +23,8 @@ const EditorInner: React.FC<EditorConfig> = ({
   height,
   maxHeight,
   minHeight,
-  autoFocus
+  autoFocus,
+  showSourceButton = false
 }) => {
   const {
     content,
@@ -37,10 +38,19 @@ const EditorInner: React.FC<EditorConfig> = ({
     editorRef
   } = useEditor();
 
-  // Initialize plugins
+  // Track initialized plugins to prevent duplicate registration
+  const initializedPluginsRef = useRef<Set<string>>(new Set());
+
+  // Initialize plugins only once
   useEffect(() => {
     plugins.forEach(plugin => {
+      // Skip if already initialized
+      if (initializedPluginsRef.current.has(plugin.name)) {
+        return;
+      }
+
       registerPlugin(plugin);
+      initializedPluginsRef.current.add(plugin.name);
 
       const pluginContext: PluginContext = {
         editor: getEditorInstance()!,
@@ -72,7 +82,8 @@ const EditorInner: React.FC<EditorConfig> = ({
         plugin.onLoad(pluginContext);
       }
     });
-  }, [plugins, registerPlugin, registerCommand, registerToolbarButton, execCommand, content, setContent, getEditorInstance]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Call onReady when editor is ready
   useEffect(() => {
@@ -99,10 +110,10 @@ const EditorInner: React.FC<EditorConfig> = ({
 
   return (
     <div
-      className={`react-editor ${theme.mode === 'dark' ? 'dark' : ''} ${className}`}
+      className={`reactEditor_container ${theme.mode === 'dark' ? 'reactEditor_dark' : ''} ${className}`}
       style={containerStyle}
     >
-      <Toolbar buttons={toolbar} />
+      <Toolbar buttons={toolbar} showSourceButton={showSourceButton} />
       <EditorContent
         placeholder={placeholder}
         readOnly={readOnly}

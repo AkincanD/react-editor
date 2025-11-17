@@ -27,8 +27,8 @@ export const StatusBar: React.FC<StatusBarProps> = ({
   }, [content]);
 
   return (
-    <div className={`react-editor-status-bar ${className}`}>
-      <div className="flex items-center gap-4">
+    <div className={`reactEditor_statusBar ${className}`}>
+      <div className="reactEditor_statusBarSection">
         {showWordCount && (
           <span>Words: {stats.wordCount}</span>
         )}
@@ -39,7 +39,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({
           <span>Lines: {customInfo.lineCount}</span>
         )}
       </div>
-      <div className="flex items-center gap-4">
+      <div className="reactEditor_statusBarSection">
         {customInfo?.custom && Object.entries(customInfo.custom).map(([key, value]) => (
           <span key={key}>{key}: {String(value)}</span>
         ))}

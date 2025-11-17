@@ -13,7 +13,7 @@ A powerful, extensible, and beautiful rich text editor for React with TypeScript
 - 🎯 **TypeScript Support** - Full type definitions included
 - ⚛️ **React 18+ Compatible** - Built for modern React applications
 - 🌙 **Dark Mode** - Built-in theme switching support
-- 🎨 **TailwindCSS** - Styled with utility-first CSS framework
+- 🎨 **Modern CSS** - Beautiful, responsive design with pure CSS
 - ⚡ **Next.js Compatible** - Works perfectly with Next.js applications
 - 📦 **Lightweight** - Minimal dependencies, optimized bundle size
 - 🔧 **Customizable** - Extensive configuration options
@@ -76,6 +76,25 @@ function App() {
       onReady={(editor) => {
         console.log('Editor is ready!', editor);
       }}
+    />
+  );
+}
+```
+
+### With View Source Button
+
+Enable the HTML source code viewer to toggle between visual and code modes:
+
+```tsx
+import { Editor, defaultPlugins } from '@akincand/react-editor';
+
+function App() {
+  return (
+    <Editor
+      plugins={defaultPlugins}
+      showSourceButton={true}  // Enable source code toggle
+      placeholder="Start typing..."
+      onChange={(content) => console.log(content)}
     />
   );
 }

@@ -18,7 +18,7 @@ export const EditorContent: React.FC<EditorContentProps> = ({
   onBlur,
   onFocus
 }) => {
-  const { content, setContent, editorRef } = useEditor();
+  const { content, setContent, editorRef, viewSource } = useEditor();
 
   const handleInput = useCallback((e: React.FormEvent<HTMLDivElement>) => {
     const newContent = e.currentTarget.innerHTML;
@@ -34,25 +34,43 @@ export const EditorContent: React.FC<EditorContentProps> = ({
     document.execCommand('insertText', false, text);
   }, []);
 
+  const handleSourceChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newContent = e.target.value;
+    setContent(newContent);
+    if (onChange) {
+      onChange(newContent);
+    }
+  }, [setContent, onChange]);
+
   useEffect(() => {
-    if (editorRef.current && content !== editorRef.current.innerHTML) {
+    if (editorRef.current && content !== editorRef.current.innerHTML && !viewSource) {
       editorRef.current.innerHTML = content;
     }
-  }, [content, editorRef]);
+  }, [content, editorRef, viewSource]);
 
   return (
-    <div className={`react-editor-content ${className}`}>
-      <div
-        ref={editorRef}
-        className="react-editor-content-editable"
-        contentEditable={!readOnly}
-        data-placeholder={placeholder}
-        onInput={handleInput}
-        onPaste={handlePaste}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        suppressContentEditableWarning
-      />
+    <div className={`reactEditor_content ${className}`}>
+      {viewSource ? (
+        <textarea
+          className="reactEditor_sourceView"
+          value={content}
+          onChange={handleSourceChange}
+          readOnly={readOnly}
+          spellCheck={false}
+        />
+      ) : (
+        <div
+          ref={editorRef}
+          className="reactEditor_contentEditable"
+          contentEditable={!readOnly}
+          data-placeholder={placeholder}
+          onInput={handleInput}
+          onPaste={handlePaste}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          suppressContentEditableWarning
+        />
+      )}
     </div>
   );
 };

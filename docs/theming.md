@@ -262,15 +262,23 @@ You can use CSS variables for more control:
 />
 ```
 
-### TailwindCSS Classes
+### CSS Classes
 
-Since the editor uses TailwindCSS, you can customize with classes:
+You can add custom CSS classes for additional styling:
 
 ```tsx
 <Editor
-  className="border-2 border-blue-500 rounded-lg shadow-xl"
+  className="my-custom-editor"
   theme={{ mode: 'dark' }}
 />
+```
+
+```css
+.my-custom-editor {
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
 ```
 
 ### Custom Wrapper
@@ -469,19 +477,7 @@ Always test your content in both light and dark modes.
 
 ### Theme Not Applying
 
-Ensure TailwindCSS dark mode is configured:
-
-```js
-// tailwind.config.js
-module.exports = {
-  darkMode: 'class',
-  // ...
-}
-```
-
-### Colors Not Changing
-
-Make sure you're passing the theme prop:
+Make sure you're passing the theme prop correctly:
 
 ```tsx
 // ❌ Wrong
@@ -489,6 +485,16 @@ Make sure you're passing the theme prop:
 
 // ✅ Correct
 <Editor theme={{ mode: 'dark' }} />
+```
+
+### Colors Not Changing
+
+Verify that the CSS is being loaded correctly:
+
+```tsx
+// Check if styles are imported
+import { Editor } from '@akincand/react-editor';
+// Styles should be automatically included
 ```
 
 ### Flashing on Load

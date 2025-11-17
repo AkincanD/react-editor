@@ -1,6 +1,6 @@
 {
   "name": "@akincand/react-editor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A powerful, extensible, and beautiful rich text editor for React with TypeScript support",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -24,7 +24,7 @@
     "wysiwyg",
     "typescript",
     "nextjs",
-    "tailwindcss",
+    "css",
     "extensible",
     "plugins"
   ],
@@ -50,7 +50,6 @@
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
-    "autoprefixer": "^10.4.22",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -58,7 +57,6 @@
     "rollup": "^4.9.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",
-    "tailwindcss": "^3.4.0",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   }

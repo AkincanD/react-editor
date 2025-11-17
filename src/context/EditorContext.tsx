@@ -16,6 +16,8 @@ interface EditorContextValue {
   registerToolbarButton: (button: ToolbarButton) => void;
   editorRef: React.RefObject<HTMLDivElement>;
   getEditorInstance: () => EditorInstance | null;
+  viewSource: boolean;
+  toggleViewSource: () => void;
 }
 
 const EditorContext = createContext<EditorContextValue | null>(null);
@@ -44,12 +46,13 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
   const [plugins, setPlugins] = useState<EditorPlugin[]>([]);
   const [commands, setCommands] = useState<Map<string, EditorCommand>>(new Map());
   const [toolbarButtons, setToolbarButtons] = useState<ToolbarButton[]>([]);
+  const [viewSource, setViewSource] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
 
   const registerPlugin = useCallback((plugin: EditorPlugin) => {
     setPlugins(prev => {
+      // Silently skip if already registered
       if (prev.find(p => p.name === plugin.name)) {
-        console.warn(`Plugin ${plugin.name} is already registered`);
         return prev;
       }
       return [...prev, plugin];
@@ -92,6 +95,10 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
       }
       return [...prev, button];
     });
+  }, []);
+
+  const toggleViewSource = useCallback(() => {
+    setViewSource(prev => !prev);
   }, []);
 
   const getEditorInstance = useCallback((): EditorInstance | null => {
@@ -143,7 +150,9 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
     toolbarButtons,
     registerToolbarButton,
     editorRef,
-    getEditorInstance
+    getEditorInstance,
+    viewSource,
+    toggleViewSource
   };
 
   return <EditorContext.Provider value={value}>{children}</EditorContext.Provider>;

@@ -1,78 +1,517 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* React Editor - Pure CSS Implementation */
+/* All classes prefixed with reactEditor_ */
 
-.react-editor {
-  @apply w-full h-full flex flex-col;
+/* CSS Variables for theming */
+:root {
+  /* Light theme */
+  --reactEditor-bg-light: #ffffff;
+  --reactEditor-text-light: #1f2937;
+  --reactEditor-border-light: #e5e7eb;
+  --reactEditor-toolbar-light: #f9fafb;
+  --reactEditor-hover-light: #f3f4f6;
+  --reactEditor-active-light: #dbeafe;
+  --reactEditor-placeholder-light: #9ca3af;
+  
+  /* Dark theme */
+  --reactEditor-bg-dark: #1e1e1e;
+  --reactEditor-text-dark: #e5e7eb;
+  --reactEditor-border-dark: #374151;
+  --reactEditor-toolbar-dark: #2d2d2d;
+  --reactEditor-hover-dark: #3d3d3d;
+  --reactEditor-active-dark: #1e3a5f;
+  --reactEditor-placeholder-dark: #6b7280;
+  
+  /* Shadows */
+  --reactEditor-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --reactEditor-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --reactEditor-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  
+  /* Transitions */
+  --reactEditor-transition: all 0.2s ease-in-out;
 }
 
-.react-editor-toolbar {
-  @apply sticky top-0 z-10 flex flex-wrap items-center gap-1 px-2 py-2 border-b transition-colors;
-  @apply bg-editor-toolbar-light dark:bg-editor-toolbar-dark;
-  @apply border-editor-border-light dark:border-editor-border-dark;
+/* Base reset for editor */
+.reactEditor_container * {
+  box-sizing: border-box;
 }
 
-.react-editor-toolbar-button {
-  @apply p-2 rounded hover:bg-editor-hover-light dark:hover:bg-editor-hover-dark;
-  @apply text-editor-text-light dark:text-editor-text-dark;
-  @apply transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
-  @apply flex items-center justify-center min-w-[32px] min-h-[32px];
+/* Main container */
+.reactEditor_container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--reactEditor-border-light);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--reactEditor-bg-light);
+  color: var(--reactEditor-text-light);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  transition: var(--reactEditor-transition);
 }
 
-.react-editor-toolbar-button.active {
-  @apply bg-blue-100 dark:bg-blue-900;
+/* Dark mode */
+.reactEditor_container.reactEditor_dark {
+  background-color: var(--reactEditor-bg-dark);
+  color: var(--reactEditor-text-dark);
+  border-color: var(--reactEditor-border-dark);
 }
 
-.react-editor-toolbar-separator {
-  @apply w-px h-6 bg-editor-border-light dark:bg-editor-border-dark mx-1;
+/* Toolbar */
+.reactEditor_toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border-bottom: 1px solid var(--reactEditor-border-light);
+  background-color: var(--reactEditor-toolbar-light);
+  transition: var(--reactEditor-transition);
 }
 
-.react-editor-content {
-  @apply flex-1 overflow-auto p-4;
-  @apply bg-editor-bg-light dark:bg-editor-bg-dark;
-  @apply text-editor-text-light dark:text-editor-text-dark;
+.reactEditor_dark .reactEditor_toolbar {
+  background-color: var(--reactEditor-toolbar-dark);
+  border-bottom-color: var(--reactEditor-border-dark);
 }
 
-.react-editor-content-editable {
-  @apply outline-none min-h-full max-w-none;
+/* Toolbar button */
+.reactEditor_toolbarButton {
+  min-width: 32px;
+  min-height: 32px;
+  padding: 6px 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--reactEditor-text-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-center: center;
+  transition: var(--reactEditor-transition);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
 }
 
-.react-editor-content-editable:empty:before {
-  @apply text-gray-400 dark:text-gray-600;
+.reactEditor_dark .reactEditor_toolbarButton {
+  color: var(--reactEditor-text-dark);
+}
+
+.reactEditor_toolbarButton:hover:not(:disabled) {
+  background-color: var(--reactEditor-hover-light);
+}
+
+.reactEditor_dark .reactEditor_toolbarButton:hover:not(:disabled) {
+  background-color: var(--reactEditor-hover-dark);
+}
+
+.reactEditor_toolbarButton:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.reactEditor_toolbarButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.reactEditor_toolbarButton.reactEditor_active {
+  background-color: var(--reactEditor-active-light);
+  color: #2563eb;
+}
+
+.reactEditor_dark .reactEditor_toolbarButton.reactEditor_active {
+  background-color: var(--reactEditor-active-dark);
+  color: #60a5fa;
+}
+
+/* Toolbar separator */
+.reactEditor_toolbarSeparator {
+  width: 1px;
+  height: 24px;
+  background-color: var(--reactEditor-border-light);
+  margin: 0 4px;
+}
+
+.reactEditor_dark .reactEditor_toolbarSeparator {
+  background-color: var(--reactEditor-border-dark);
+}
+
+/* Content area */
+.reactEditor_content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px;
+  background-color: var(--reactEditor-bg-light);
+  color: var(--reactEditor-text-light);
+}
+
+.reactEditor_dark .reactEditor_content {
+  background-color: var(--reactEditor-bg-dark);
+  color: var(--reactEditor-text-dark);
+}
+
+/* Content editable area */
+.reactEditor_contentEditable {
+  outline: none;
+  min-height: 100%;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.reactEditor_contentEditable:empty:before {
   content: attr(data-placeholder);
+  color: var(--reactEditor-placeholder-light);
+  pointer-events: none;
 }
 
-.react-editor-status-bar {
-  @apply flex items-center justify-between px-4 py-2 text-sm border-t;
-  @apply bg-editor-toolbar-light dark:bg-editor-toolbar-dark;
-  @apply border-editor-border-light dark:border-editor-border-dark;
-  @apply text-gray-600 dark:text-gray-400;
+.reactEditor_dark .reactEditor_contentEditable:empty:before {
+  color: var(--reactEditor-placeholder-dark);
 }
 
-.react-editor-dropdown {
-  @apply absolute mt-1 rounded-md shadow-lg z-20;
-  @apply bg-editor-bg-light dark:bg-editor-bg-dark;
-  @apply border border-editor-border-light dark:border-editor-border-dark;
+/* Content editable typography */
+.reactEditor_contentEditable h1 {
+  font-size: 2em;
+  font-weight: 700;
+  margin: 0.67em 0;
+  line-height: 1.2;
 }
 
-.react-editor-dropdown-item {
-  @apply px-4 py-2 cursor-pointer;
-  @apply hover:bg-editor-hover-light dark:hover:bg-editor-hover-dark;
-  @apply text-editor-text-light dark:text-editor-text-dark;
+.reactEditor_contentEditable h2 {
+  font-size: 1.5em;
+  font-weight: 600;
+  margin: 0.75em 0;
+  line-height: 1.3;
+}
+
+.reactEditor_contentEditable h3 {
+  font-size: 1.17em;
+  font-weight: 600;
+  margin: 0.83em 0;
+  line-height: 1.4;
+}
+
+.reactEditor_contentEditable p {
+  margin: 0.5em 0;
+  line-height: 1.6;
+}
+
+.reactEditor_contentEditable ul,
+.reactEditor_contentEditable ol {
+  margin: 0.5em 0;
+  padding-left: 2em;
+}
+
+.reactEditor_contentEditable li {
+  margin: 0.25em 0;
+  line-height: 1.6;
+}
+
+.reactEditor_contentEditable a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.reactEditor_dark .reactEditor_contentEditable a {
+  color: #60a5fa;
+}
+
+.reactEditor_contentEditable blockquote {
+  margin: 1em 0;
+  padding-left: 1em;
+  border-left: 4px solid var(--reactEditor-border-light);
+  font-style: italic;
+}
+
+.reactEditor_dark .reactEditor_contentEditable blockquote {
+  border-left-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_contentEditable code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background-color: var(--reactEditor-hover-light);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.875em;
+}
+
+.reactEditor_dark .reactEditor_contentEditable code {
+  background-color: var(--reactEditor-hover-dark);
+}
+
+.reactEditor_contentEditable pre {
+  padding: 12px;
+  border-radius: 6px;
+  background-color: var(--reactEditor-hover-light);
+  overflow-x: auto;
+  margin: 1em 0;
+}
+
+.reactEditor_dark .reactEditor_contentEditable pre {
+  background-color: var(--reactEditor-hover-dark);
+}
+
+.reactEditor_contentEditable pre code {
+  padding: 0;
+  background-color: transparent;
+}
+
+/* Status bar */
+.reactEditor_statusBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-size: 12px;
+  border-top: 1px solid var(--reactEditor-border-light);
+  background-color: var(--reactEditor-toolbar-light);
+  color: #6b7280;
+}
+
+.reactEditor_dark .reactEditor_statusBar {
+  background-color: var(--reactEditor-toolbar-dark);
+  border-top-color: var(--reactEditor-border-dark);
+  color: #9ca3af;
+}
+
+.reactEditor_statusBarSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Dropdown */
+.reactEditor_dropdown {
+  position: absolute;
+  margin-top: 4px;
+  border-radius: 6px;
+  box-shadow: var(--reactEditor-shadow-lg);
+  z-index: 20;
+  background-color: var(--reactEditor-bg-light);
+  border: 1px solid var(--reactEditor-border-light);
+  min-width: 150px;
+  overflow: hidden;
+}
+
+.reactEditor_dark .reactEditor_dropdown {
+  background-color: var(--reactEditor-bg-dark);
+  border-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_dropdownItem {
+  padding: 8px 16px;
+  cursor: pointer;
+  color: var(--reactEditor-text-light);
+  transition: var(--reactEditor-transition);
+}
+
+.reactEditor_dark .reactEditor_dropdownItem {
+  color: var(--reactEditor-text-dark);
+}
+
+.reactEditor_dropdownItem:hover {
+  background-color: var(--reactEditor-hover-light);
+}
+
+.reactEditor_dark .reactEditor_dropdownItem:hover {
+  background-color: var(--reactEditor-hover-dark);
+}
+
+/* Scrollbar styling */
+.reactEditor_content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.reactEditor_content::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.reactEditor_content::-webkit-scrollbar-thumb {
+  background-color: var(--reactEditor-border-light);
+  border-radius: 4px;
+}
+
+.reactEditor_dark .reactEditor_content::-webkit-scrollbar-thumb {
+  background-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_content::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+.reactEditor_dark .reactEditor_content::-webkit-scrollbar-thumb:hover {
+  background-color: #6b7280;
 }
 
 /* Responsive styles */
-@media (max-width: 640px) {
-  .react-editor-toolbar {
-    @apply text-sm;
+@media (max-width: 768px) {
+  .reactEditor_toolbar {
+    font-size: 13px;
+    gap: 2px;
+    padding: 6px;
   }
   
-  .react-editor-toolbar-button {
-    @apply min-w-[28px] min-h-[28px] p-1.5;
+  .reactEditor_toolbarButton {
+    min-width: 28px;
+    min-height: 28px;
+    padding: 5px 6px;
+    font-size: 13px;
   }
   
-  .react-editor-content {
-    @apply p-2;
+  .reactEditor_content {
+    padding: 12px;
+  }
+  
+  .reactEditor_statusBar {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  
+  .reactEditor_statusBarSection {
+    gap: 12px;
   }
 }
 
+@media (max-width: 480px) {
+  .reactEditor_toolbar {
+    font-size: 12px;
+    gap: 1px;
+    padding: 4px;
+  }
+  
+  .reactEditor_toolbarButton {
+    min-width: 26px;
+    min-height: 26px;
+    padding: 4px 5px;
+    font-size: 12px;
+  }
+  
+  .reactEditor_content {
+    padding: 8px;
+  }
+  
+  .reactEditor_statusBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+  
+  .reactEditor_statusBarSection {
+    gap: 8px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .reactEditor_toolbar,
+  .reactEditor_statusBar {
+    display: none;
+  }
+  
+  .reactEditor_container {
+    border: none;
+  }
+  
+  .reactEditor_content {
+    padding: 0;
+  }
+}
+
+/* Focus styles */
+.reactEditor_container:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.reactEditor_dark.reactEditor_container:focus-within {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+/* Selection color */
+.reactEditor_contentEditable::selection {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+.reactEditor_dark .reactEditor_contentEditable::selection {
+  background-color: rgba(96, 165, 250, 0.3);
+}
+
+/* Loading state (optional) */
+.reactEditor_loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Source View */
+.reactEditor_sourceView {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding: 16px;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: var(--reactEditor-bg-light);
+  color: var(--reactEditor-text-light);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.reactEditor_dark .reactEditor_sourceView {
+  background-color: var(--reactEditor-bg-dark);
+  color: var(--reactEditor-text-dark);
+}
+
+.reactEditor_sourceView::-webkit-scrollbar {
+  width: 8px;
+}
+
+.reactEditor_sourceView::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.reactEditor_sourceView::-webkit-scrollbar-thumb {
+  background-color: var(--reactEditor-border-light);
+  border-radius: 4px;
+}
+
+.reactEditor_dark .reactEditor_sourceView::-webkit-scrollbar-thumb {
+  background-color: var(--reactEditor-border-dark);
+}
+
+/* Accessibility */
+.reactEditor_toolbarButton:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.reactEditor_dark .reactEditor_toolbarButton:focus-visible {
+  outline-color: #60a5fa;
+}
+
+/* Animation for toolbar buttons */
+@keyframes reactEditor_fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reactEditor_toolbarButton {
+  animation: reactEditor_fadeIn 0.2s ease-out;
+}

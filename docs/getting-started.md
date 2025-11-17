@@ -68,10 +68,11 @@ npm install --save-dev @types/react @types/react-dom
 
 ### Styling Issues
 
-The editor uses TailwindCSS. If styles are not appearing:
+The editor uses custom CSS with scoped class names. If styles are not appearing:
 
-1. Ensure TailwindCSS is properly configured in your project
-2. The editor includes its own styles, but you may need to add Tailwind to your project for full compatibility
+1. Ensure CSS is being loaded correctly in your build setup
+2. The editor includes its own styles - no external CSS framework required
+3. All classes are prefixed with `reactEditor_` to avoid conflicts
 
 ### Next.js Issues
 

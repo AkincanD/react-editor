@@ -24,6 +24,7 @@ The main `Editor` component accepts the following props:
 | `readOnly` | `boolean` | `false` | Makes editor read-only |
 | `autoFocus` | `boolean` | `false` | Auto-focuses editor on mount |
 | `spellCheck` | `boolean` | `true` | Enables browser spell checking |
+| `showSourceButton` | `boolean` | `false` | Shows view source toggle button in toolbar |
 | `className` | `string` | `""` | Additional CSS class for wrapper |
 
 #### Styling Props
@@ -87,6 +88,7 @@ function MyEditor() {
       theme={{ mode: 'dark' }}
       height="500px"
       autoFocus
+      showSourceButton={true}
       onChange={setContent}
       onReady={(editor) => console.log('Editor ready!', editor)}
     />

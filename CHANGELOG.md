@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-11-17
+
+### Added
+- **View Source Button**: New optional button to view and edit raw HTML
+  - Toggle between visual editor and HTML source code
+  - Enabled with `showSourceButton` prop (default: `false`)
+  - Source view with syntax-friendly monospace font
+  - Bidirectional editing - changes sync in both modes
+  - Responsive design for mobile and desktop
+
+### Changed
+- **BREAKING**: Removed TailwindCSS dependency - now uses pure CSS
+- Rewrote all styles with custom CSS (prefixed with `reactEditor_`)
+- Improved performance by eliminating unnecessary re-renders
+- Fixed plugin duplicate registration warnings
+
+### Fixed
+- Plugin duplicate registration issue causing console warnings
+- Excessive re-renders in EditorContext
+- Component lifecycle optimization
+
+### Improved
+- Smaller bundle size (removed TailwindCSS and PostCSS dependencies)
+- Better scoped CSS with `reactEditor_` prefix to avoid conflicts
+- More responsive design with mobile-first approach
+- Enhanced CSS variables for easier theming
+- HTML source code viewer/editor
+- Seamless switching between visual and source modes
+
+### Documentation
+- Updated all documentation to reflect pure CSS implementation
+- Removed TailwindCSS configuration references
+- Added new CSS customization examples
+- Added View Source feature documentation
+
 ## [1.0.0] - 2025-11-17
 
 ### Added
@@ -18,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Text alignment (left, center, right, justify)
   - Links (create and remove)
 - Light and dark theme support
-- TailwindCSS integration
+- Modern CSS with responsive design
 - TypeScript support with full type definitions
 - React 18+ compatibility
 - Next.js App Router support
