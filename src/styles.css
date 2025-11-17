@@ -524,35 +524,43 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  animation: reactEditor_fadeIn 0.2s ease-out;
+  padding: 16px;
+  animation: reactEditor_fadeIn 0.25s ease-out;
 }
 
 .reactEditor_modal {
   background-color: var(--reactEditor-bg-light);
-  border-radius: 8px;
-  box-shadow: var(--reactEditor-shadow-lg);
-  max-width: 500px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: reactEditor_slideUp 0.3s ease-out;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 
+              0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 540px;
+  width: 100%;
+  max-height: calc(100vh - 32px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: reactEditor_slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reactEditor_dark .reactEditor_modal {
   background-color: var(--reactEditor-bg-dark);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 
+              0 10px 10px -5px rgba(0, 0, 0, 0.3);
 }
 
 .reactEditor_modalHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
+  padding: 20px 24px;
   border-bottom: 1px solid var(--reactEditor-border-light);
+  flex-shrink: 0;
 }
 
 .reactEditor_dark .reactEditor_modalHeader {
@@ -560,10 +568,11 @@
 }
 
 .reactEditor_modalTitle {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   margin: 0;
   color: var(--reactEditor-text-light);
+  letter-spacing: -0.01em;
 }
 
 .reactEditor_dark .reactEditor_modalTitle {
@@ -573,33 +582,39 @@
 .reactEditor_modalCloseButton {
   background: none;
   border: none;
-  font-size: 24px;
-  color: var(--reactEditor-text-light);
+  font-size: 28px;
+  color: #6b7280;
   cursor: pointer;
   padding: 0;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
-  transition: var(--reactEditor-transition);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  line-height: 1;
 }
 
 .reactEditor_dark .reactEditor_modalCloseButton {
-  color: var(--reactEditor-text-dark);
+  color: #9ca3af;
 }
 
 .reactEditor_modalCloseButton:hover {
   background-color: var(--reactEditor-hover-light);
+  color: var(--reactEditor-text-light);
+  transform: scale(1.05);
 }
 
 .reactEditor_dark .reactEditor_modalCloseButton:hover {
   background-color: var(--reactEditor-hover-dark);
+  color: var(--reactEditor-text-dark);
 }
 
 .reactEditor_modalBody {
-  padding: 20px;
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .reactEditor_modalFooter {
@@ -607,12 +622,15 @@
   align-items: center;
   justify-content: flex-end;
   gap: 12px;
-  padding: 16px 20px;
+  padding: 20px 24px;
   border-top: 1px solid var(--reactEditor-border-light);
+  background-color: var(--reactEditor-toolbar-light);
+  flex-shrink: 0;
 }
 
 .reactEditor_dark .reactEditor_modalFooter {
   border-top-color: var(--reactEditor-border-dark);
+  background-color: var(--reactEditor-toolbar-dark);
 }
 
 .reactEditor_formGroup {
@@ -637,96 +655,154 @@
 
 .reactEditor_input {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--reactEditor-border-light);
-  border-radius: 6px;
+  padding: 11px 14px;
+  border: 1.5px solid var(--reactEditor-border-light);
+  border-radius: 8px;
   font-size: 14px;
   background-color: var(--reactEditor-bg-light);
   color: var(--reactEditor-text-light);
-  transition: var(--reactEditor-transition);
+  transition: all 0.2s ease;
+  font-family: inherit;
 }
 
 .reactEditor_dark .reactEditor_input {
-  background-color: var(--reactEditor-bg-dark);
+  background-color: #1a1a1a;
   color: var(--reactEditor-text-dark);
   border-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_input:hover {
+  border-color: #9ca3af;
+}
+
+.reactEditor_dark .reactEditor_input:hover {
+  border-color: #6b7280;
 }
 
 .reactEditor_input:focus {
   outline: none;
   border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
 .reactEditor_dark .reactEditor_input:focus {
   border-color: #60a5fa;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
+}
+
+.reactEditor_input::placeholder {
+  color: var(--reactEditor-placeholder-light);
+}
+
+.reactEditor_dark .reactEditor_input::placeholder {
+  color: var(--reactEditor-placeholder-dark);
 }
 
 .reactEditor_button {
-  padding: 10px 20px;
+  padding: 11px 22px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--reactEditor-transition);
+  transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  font-family: inherit;
+  position: relative;
+  overflow: hidden;
+}
+
+.reactEditor_button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.reactEditor_button:active::before {
+  width: 300px;
+  height: 300px;
 }
 
 .reactEditor_buttonPrimary {
-  background-color: #2563eb;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   color: white;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
 }
 
 .reactEditor_buttonPrimary:hover:not(:disabled) {
-  background-color: #1d4ed8;
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+}
+
+.reactEditor_buttonPrimary:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .reactEditor_buttonSecondary {
   background-color: var(--reactEditor-hover-light);
   color: var(--reactEditor-text-light);
+  border: 1.5px solid var(--reactEditor-border-light);
 }
 
 .reactEditor_dark .reactEditor_buttonSecondary {
   background-color: var(--reactEditor-hover-dark);
   color: var(--reactEditor-text-dark);
+  border-color: var(--reactEditor-border-dark);
 }
 
 .reactEditor_buttonSecondary:hover:not(:disabled) {
   background-color: var(--reactEditor-border-light);
+  border-color: #9ca3af;
+  transform: translateY(-1px);
 }
 
 .reactEditor_dark .reactEditor_buttonSecondary:hover:not(:disabled) {
   background-color: var(--reactEditor-border-dark);
+  border-color: #6b7280;
+}
+
+.reactEditor_buttonSecondary:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .reactEditor_button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none !important;
 }
 
 .reactEditor_checkbox {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
   user-select: none;
+  padding: 4px 0;
 }
 
 .reactEditor_checkboxInput {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   cursor: pointer;
+  accent-color: #2563eb;
 }
 
 .reactEditor_checkboxLabel {
   font-size: 14px;
   color: var(--reactEditor-text-light);
   cursor: pointer;
+  font-weight: 500;
 }
 
 .reactEditor_dark .reactEditor_checkboxLabel {
@@ -734,8 +810,8 @@
 }
 
 .reactEditor_advancedToggle {
-  margin-top: 12px;
-  padding-top: 12px;
+  margin-top: 16px;
+  padding-top: 16px;
   border-top: 1px solid var(--reactEditor-border-light);
 }
 
@@ -744,16 +820,31 @@
 }
 
 .reactEditor_advancedContent {
-  margin-top: 16px;
+  margin-top: 20px;
+  padding: 16px;
+  background-color: var(--reactEditor-toolbar-light);
+  border-radius: 8px;
+  border: 1px solid var(--reactEditor-border-light);
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.reactEditor_dark .reactEditor_advancedContent {
+  background-color: #1a1a1a;
+  border-color: var(--reactEditor-border-dark);
 }
 
 .reactEditor_inputRow {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+@media (max-width: 480px) {
+  .reactEditor_inputRow {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Video embed styles */
@@ -781,10 +872,79 @@
 @keyframes reactEditor_slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive modal styles */
+@media (max-width: 640px) {
+  .reactEditor_modalOverlay {
+    padding: 8px;
+  }
+  
+  .reactEditor_modal {
+    max-width: 100%;
+    max-height: calc(100vh - 16px);
+    border-radius: 16px;
+  }
+  
+  .reactEditor_modalHeader {
+    padding: 16px 20px;
+  }
+  
+  .reactEditor_modalTitle {
+    font-size: 18px;
+  }
+  
+  .reactEditor_modalBody {
+    padding: 20px;
+  }
+  
+  .reactEditor_modalFooter {
+    padding: 16px 20px;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+  
+  .reactEditor_button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .reactEditor_modalOverlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  
+  .reactEditor_modal {
+    max-height: 85vh;
+    border-radius: 20px 20px 0 0;
+    max-width: 100%;
+  }
+  
+  .reactEditor_modalHeader {
+    padding: 20px;
+    position: relative;
+  }
+  
+  .reactEditor_modalHeader::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background-color: var(--reactEditor-border-light);
+    border-radius: 2px;
+  }
+  
+  .reactEditor_dark .reactEditor_modalHeader::before {
+    background-color: var(--reactEditor-border-dark);
   }
 }
