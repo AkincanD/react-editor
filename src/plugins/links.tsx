@@ -40,7 +40,7 @@ export const linksPlugin: EditorPlugin = {
   commands: [
     {
       name: 'createLink',
-      execute: (url: string) => document.execCommand('createLink', false, url),
+      execute: (url?: unknown) => document.execCommand('createLink', false, url as string),
       canExecute: () => true
     },
     {

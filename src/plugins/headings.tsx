@@ -49,7 +49,7 @@ export const headingsPlugin: EditorPlugin = {
   commands: [
     {
       name: 'formatBlock',
-      execute: (value: string) => document.execCommand('formatBlock', false, value),
+      execute: (value?: unknown) => document.execCommand('formatBlock', false, value as string),
       canExecute: () => true
     }
   ]

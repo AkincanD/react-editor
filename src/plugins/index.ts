@@ -1,3 +1,9 @@
+import { basicFormattingPlugin } from './basicFormatting';
+import { headingsPlugin } from './headings';
+import { listsPlugin } from './lists';
+import { alignmentPlugin } from './alignment';
+import { linksPlugin } from './links';
+
 export { basicFormattingPlugin } from './basicFormatting';
 export { headingsPlugin } from './headings';
 export { listsPlugin } from './lists';

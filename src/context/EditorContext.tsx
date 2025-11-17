@@ -11,7 +11,7 @@ interface EditorContextValue {
   unregisterPlugin: (pluginName: string) => void;
   commands: Map<string, EditorCommand>;
   registerCommand: (command: EditorCommand) => void;
-  execCommand: (commandName: string, value?: any) => void;
+  execCommand: (commandName: string, value?: unknown) => void;
   toolbarButtons: ToolbarButton[];
   registerToolbarButton: (button: ToolbarButton) => void;
   editorRef: React.RefObject<HTMLDivElement>;

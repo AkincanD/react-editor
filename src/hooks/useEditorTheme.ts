@@ -29,7 +29,7 @@ export const useEditorTheme = () => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     
     const handleChange = (e: MediaQueryListEvent) => {
-      setTheme(prev => ({
+      setTheme((prev: EditorTheme) => ({
         ...prev,
         mode: e.matches ? 'dark' : 'light'
       }));
