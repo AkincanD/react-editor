@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Source view with syntax-friendly monospace font
   - Bidirectional editing - changes sync in both modes
   - Responsive design for mobile and desktop
+- **Debug Console System**: Advanced debugging with `debugConsole` prop
+  - Color-coded console output with categories (INIT, PLUGIN, COMMAND, TOOLBAR, CONTENT, VIEW)
+  - Timestamped logs for better tracking
+  - Grouped logs for related operations
+  - Debug API: `debugLog`, `debugWarn`, `debugError`, `debugGroup`, `debugGroupEnd`
+  - Available for use in custom plugins
 
 ### Changed
 - **BREAKING**: Removed TailwindCSS dependency - now uses pure CSS
@@ -33,12 +39,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced CSS variables for easier theming
 - HTML source code viewer/editor
 - Seamless switching between visual and source modes
+- Developer experience with comprehensive debugging tools
 
 ### Documentation
 - Updated all documentation to reflect pure CSS implementation
 - Removed TailwindCSS configuration references
 - Added new CSS customization examples
 - Added View Source feature documentation
+- Added comprehensive Debugging guide with examples
+- Added Debug API reference
 
 ## [1.0.0] - 2025-11-17
 

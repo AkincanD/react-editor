@@ -1,8 +1,8 @@
 # React Editor v1.0.2
 
-## 🎨 Pure CSS Migration & View Source Feature
+## 🎨 Pure CSS Migration, View Source & Debug Console
 
-This major update removes TailwindCSS dependency, migrates to pure CSS, and introduces a powerful View Source feature for HTML editing!
+This major update removes TailwindCSS dependency, migrates to pure CSS, and introduces powerful View Source and Debug Console features!
 
 ## 🔧 Breaking Changes
 
@@ -37,7 +37,17 @@ Toggle between visual editor and HTML source code:
 - Better responsive design with mobile-first approach
 - Improved dark mode implementation
 
-### 4. Bundle Size Reduction 📦
+### 4. Debug Console System 🔍
+
+Advanced debugging capabilities for developers:
+
+- **Color-Coded Logs**: Easy-to-read console output with categories
+- **Timestamped**: Track when events occur
+- **Grouped Output**: Related operations grouped together
+- **Optional Feature**: Enable with `debugConsole` prop (default: `false`)
+- **Plugin Integration**: Use debug API in custom plugins
+
+### 5. Bundle Size Reduction 📦
 
 - Removed TailwindCSS (~50KB)
 - Removed autoprefixer dependency
@@ -123,6 +133,36 @@ function App() {
 }
 ```
 
+### With Debug Console
+
+Enable debug logging for development:
+
+```tsx
+import { Editor, defaultPlugins } from '@akincand/react-editor';
+
+function App() {
+  return (
+    <Editor
+      plugins={defaultPlugins}
+      debugConsole={true}  // Enable debug logging
+      showSourceButton={true}
+      placeholder="Start typing..."
+    />
+  );
+}
+```
+
+Debug output example:
+```
+🎨 React Editor Debug Mode Enabled
+
+[14:23:45] INIT Editor initializing...
+[14:23:45] PLUGIN Registering plugin: basicFormatting
+[14:23:45] PLUGIN   ↳ Registering 4 toolbar button(s)
+[14:23:45] TOOLBAR Button clicked: bold
+[14:23:46] COMMAND Executing: bold
+```
+
 ### Advanced Usage
 
 ```tsx
@@ -192,30 +232,39 @@ function App() {
 - ✅ Responsive design
 - ✅ Dark/light theme support
 
+### Debug Console Features
+- ✅ Color-coded console output
+- ✅ Timestamped logs
+- ✅ Categorized messages (INIT, PLUGIN, COMMAND, TOOLBAR, CONTENT, VIEW)
+- ✅ Grouped related operations
+- ✅ Debug API for custom plugins
+- ✅ No performance impact when disabled
+
 ## 📊 Bundle Size Comparison
 
 - **v1.0.1**: ~180KB (with TailwindCSS)
 - **v1.0.2**: ~120KB (pure CSS) - **33% smaller!**
 
-## 🎯 Use Cases for View Source
+## 🎯 Use Cases
 
-### 1. HTML Learning
-Show students how visual changes translate to HTML code.
+### View Source
+1. **HTML Learning**: Show students how visual changes translate to HTML
+2. **Developer Debugging**: Inspect generated HTML to identify issues
+3. **Manual Editing**: Advanced users can edit HTML directly
+4. **Code Review**: Quickly view source code of created content
 
-### 2. Developer Debugging
-Inspect generated HTML to identify issues quickly.
-
-### 3. Manual HTML Editing
-Advanced users can edit HTML directly.
-
-### 4. Code Review
-Quickly view the source code of created content.
+### Debug Console
+1. **Plugin Development**: Debug custom plugins with detailed logs
+2. **Troubleshooting**: Identify issues in editor lifecycle
+3. **Performance Monitoring**: Track command execution and events
+4. **Integration Testing**: Verify correct behavior during development
 
 ## 📝 New Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `showSourceButton` | `boolean` | `false` | Shows view source toggle button in toolbar |
+| `debugConsole` | `boolean` | `false` | Enables debug logging in console |
 
 ## 🖼️ Visual
 
