@@ -36,9 +36,11 @@ export {
   alignmentPlugin,
   linksPlugin,
   videoPlugin,
+  imagePlugin,
   defaultPlugins,
   LinkModalWrapper,
-  VideoModalWrapper
+  VideoModalWrapper,
+  ImageModalWrapper
 } from './plugins';
 
 // Styles

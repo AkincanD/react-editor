@@ -12,6 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Accepts React CSSProperties
   - Merged with default container styles
   - Full CSS property support
+- **Image Plugin**: New image insertion feature
+  - Insert images from URL
+  - Support for .jpg, .png, .gif, .webp, .svg formats
+  - Alt text support for accessibility
+  - Optional custom dimensions (width/height)
+  - Responsive by default (max-width: 100%)
+  - Beautiful modal interface
+- **Direct Video File Support**: Enhanced video plugin
+  - Support for .mp4, .webm, .ogg video files
+  - HTML5 video element with controls
+  - Works alongside YouTube and Vimeo
 - **Enhanced Modal Design**: Completely redesigned modal system
   - Backdrop blur effect with glassmorphism
   - Smooth scale and slide animations

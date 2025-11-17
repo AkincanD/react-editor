@@ -5,7 +5,7 @@ import { EditorContent } from './EditorContent';
 import { StatusBar } from './StatusBar';
 import { EditorConfig, PluginContext } from '../types';
 import { setDebugMode, debugLog, debugGroup, debugGroupEnd } from '../utils/logger';
-import { LinkModalWrapper, VideoModalWrapper } from '../plugins';
+import { LinkModalWrapper, VideoModalWrapper, ImageModalWrapper } from '../plugins';
 import '../styles.css';
 
 interface EditorProps extends EditorConfig {
@@ -176,6 +176,7 @@ const EditorInner: React.FC<EditorConfig> = ({
       {/* Modal components for plugins */}
       <LinkModalWrapper />
       <VideoModalWrapper />
+      <ImageModalWrapper />
     </>
   );
 };

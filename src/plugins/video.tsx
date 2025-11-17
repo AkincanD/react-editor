@@ -4,7 +4,13 @@ import { Modal } from '../components/Modal';
 import { debugLog } from '../utils/logger';
 
 // Video URL parser
-const parseVideoUrl = (url: string): { provider: string; videoId: string } | null => {
+const parseVideoUrl = (url: string): { provider: string; videoId: string; url?: string } | null => {
+  // Direct video file patterns (.mp4, .webm, .ogg)
+  const directVideoPattern = /\.(mp4|webm|ogg)(\?.*)?$/i;
+  if (directVideoPattern.test(url)) {
+    return { provider: 'direct', videoId: '', url };
+  }
+
   // YouTube patterns
   const youtubePatterns = [
     /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/,
@@ -34,12 +40,14 @@ const parseVideoUrl = (url: string): { provider: string; videoId: string } | nul
   return null;
 };
 
-// Generate embed URL
-const getEmbedUrl = (provider: string, videoId: string): string => {
+// Generate embed URL or return direct URL
+const getEmbedUrl = (provider: string, videoId: string, directUrl?: string): string => {
   if (provider === 'youtube') {
     return `https://www.youtube.com/embed/${videoId}`;
   } else if (provider === 'vimeo') {
     return `https://player.vimeo.com/video/${videoId}`;
+  } else if (provider === 'direct' && directUrl) {
+    return directUrl;
   }
   return '';
 };
@@ -64,22 +72,33 @@ const VideoModal: React.FC<{
 
     const videoInfo = parseVideoUrl(url);
     if (!videoInfo) {
-      setError('Invalid video URL. Please enter a valid YouTube or Vimeo URL.');
+      setError('Invalid video URL. Please enter a valid YouTube, Vimeo, or direct video URL (.mp4, .webm, .ogg).');
       return;
     }
 
-    debugLog('VIDEO', `Inserting ${videoInfo.provider} video`, { videoId: videoInfo.videoId });
+    debugLog('VIDEO', `Inserting ${videoInfo.provider} video`, { 
+      videoId: videoInfo.videoId,
+      url: videoInfo.url 
+    });
 
-    const embedUrl = getEmbedUrl(videoInfo.provider, videoInfo.videoId);
+    const embedUrl = getEmbedUrl(videoInfo.provider, videoInfo.videoId, videoInfo.url);
 
     let html: string;
 
-    if (showAdvanced && width && height) {
-      // Custom dimensions
-      html = `<div class="reactEditor_videoWrapper" style="width: ${width}; padding-bottom: 0; height: ${height};"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+    if (videoInfo.provider === 'direct') {
+      // Direct video file (HTML5 video element)
+      if (showAdvanced && width && height) {
+        html = `<div class="reactEditor_videoWrapper" style="width: ${width}; padding-bottom: 0; height: ${height};"><video controls style="width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
+      } else {
+        html = `<div class="reactEditor_videoWrapper"><video controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
+      }
     } else {
-      // Responsive (default)
-      html = `<div class="reactEditor_videoWrapper"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+      // YouTube or Vimeo (iframe)
+      if (showAdvanced && width && height) {
+        html = `<div class="reactEditor_videoWrapper" style="width: ${width}; padding-bottom: 0; height: ${height};"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+      } else {
+        html = `<div class="reactEditor_videoWrapper"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+      }
     }
 
     onInsert(html);
@@ -112,7 +131,7 @@ const VideoModal: React.FC<{
           id="videoUrl"
           type="url"
           className="reactEditor_input"
-          placeholder="https://www.youtube.com/watch?v=... or https://vimeo.com/..."
+          placeholder="https://www.youtube.com/watch?v=... or https://example.com/video.mp4"
           value={url}
           onChange={(e) => {
             setUrl(e.target.value);
@@ -126,7 +145,7 @@ const VideoModal: React.FC<{
           </div>
         )}
         <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
-          Supports YouTube and Vimeo URLs
+          Supports YouTube, Vimeo, and direct video URLs (.mp4, .webm, .ogg)
         </div>
       </div>
 
