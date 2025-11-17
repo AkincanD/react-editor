@@ -1,0 +1,45 @@
+# Source files
+src/
+*.ts
+*.tsx
+!*.d.ts
+
+# Config files
+tsconfig.json
+rollup.config.js
+.eslintrc.js
+tailwind.config.js
+postcss.config.js
+
+# Development
+examples/
+docs/
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore
+
+# CI/CD
+.github/
+
+# Tests
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__/
+coverage/
+
+# Documentation
+CONTRIBUTING.md
+CHANGELOG.md
+*.md
+!README.md
+
+# Misc
+.DS_Store
+*.log
+node_modules/
+

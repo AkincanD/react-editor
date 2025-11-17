@@ -1,0 +1,43 @@
+# Table of Contents
+
+## Introduction
+
+* [Introduction](README.md)
+* [Getting Started](getting-started.md)
+* [Installation](installation.md)
+
+## Guide
+
+* [Basic Usage](basic-usage.md)
+* [Configuration](configuration.md)
+* [Theming](theming.md)
+* [Next.js Integration](nextjs-integration.md)
+
+## Plugins
+
+* [Plugin System](plugins/README.md)
+* [Built-in Plugins](plugins/built-in-plugins.md)
+* [Creating Custom Plugins](plugins/creating-plugins.md)
+* [Plugin API](plugins/plugin-api.md)
+
+## API Reference
+
+* [API Reference](api-reference.md)
+* [Editor Component](api/editor.md)
+* [Toolbar Component](api/toolbar.md)
+* [Types](api/types.md)
+* [Hooks](api/hooks.md)
+
+## Examples
+
+* [Examples Overview](examples/README.md)
+* [Basic Example](examples/basic.md)
+* [Custom Plugin Example](examples/custom-plugin.md)
+* [Next.js Example](examples/nextjs.md)
+* [Advanced Usage](examples/advanced.md)
+
+## Contributing
+
+* [Contributing Guide](contributing.md)
+* [Development Setup](development.md)
+

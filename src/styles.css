@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.react-editor {
+  @apply w-full h-full flex flex-col;
+}
+
+.react-editor-toolbar {
+  @apply sticky top-0 z-10 flex flex-wrap items-center gap-1 px-2 py-2 border-b transition-colors;
+  @apply bg-editor-toolbar-light dark:bg-editor-toolbar-dark;
+  @apply border-editor-border-light dark:border-editor-border-dark;
+}
+
+.react-editor-toolbar-button {
+  @apply p-2 rounded hover:bg-editor-hover-light dark:hover:bg-editor-hover-dark;
+  @apply text-editor-text-light dark:text-editor-text-dark;
+  @apply transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply flex items-center justify-center min-w-[32px] min-h-[32px];
+}
+
+.react-editor-toolbar-button.active {
+  @apply bg-blue-100 dark:bg-blue-900;
+}
+
+.react-editor-toolbar-separator {
+  @apply w-px h-6 bg-editor-border-light dark:bg-editor-border-dark mx-1;
+}
+
+.react-editor-content {
+  @apply flex-1 overflow-auto p-4;
+  @apply bg-editor-bg-light dark:bg-editor-bg-dark;
+  @apply text-editor-text-light dark:text-editor-text-dark;
+}
+
+.react-editor-content-editable {
+  @apply outline-none min-h-full;
+  @apply prose dark:prose-invert max-w-none;
+}
+
+.react-editor-content-editable:empty:before {
+  @apply text-gray-400 dark:text-gray-600;
+  content: attr(data-placeholder);
+}
+
+.react-editor-status-bar {
+  @apply flex items-center justify-between px-4 py-2 text-sm border-t;
+  @apply bg-editor-toolbar-light dark:bg-editor-toolbar-dark;
+  @apply border-editor-border-light dark:border-editor-border-dark;
+  @apply text-gray-600 dark:text-gray-400;
+}
+
+.react-editor-dropdown {
+  @apply absolute mt-1 rounded-md shadow-lg z-20;
+  @apply bg-editor-bg-light dark:bg-editor-bg-dark;
+  @apply border border-editor-border-light dark:border-editor-border-dark;
+}
+
+.react-editor-dropdown-item {
+  @apply px-4 py-2 cursor-pointer;
+  @apply hover:bg-editor-hover-light dark:hover:bg-editor-hover-dark;
+  @apply text-editor-text-light dark:text-editor-text-dark;
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .react-editor-toolbar {
+    @apply text-sm;
+  }
+  
+  .react-editor-toolbar-button {
+    @apply min-w-[28px] min-h-[28px] p-1.5;
+  }
+  
+  .react-editor-content {
+    @apply p-2;
+  }
+}
+
