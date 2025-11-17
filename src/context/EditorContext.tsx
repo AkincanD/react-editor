@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useRef, ReactNode } from 'react';
-import { EditorPlugin, PluginContext, EditorCommand, ToolbarButton, EditorInstance, EditorTheme } from '../types';
+import { EditorPlugin, EditorCommand, ToolbarButton, EditorInstance, EditorTheme } from '../types';
 
 interface EditorContextValue {
   content: string;
@@ -74,7 +74,7 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
     });
   }, []);
 
-  const execCommand = useCallback((commandName: string, value?: any) => {
+  const execCommand = useCallback((commandName: string, value?: unknown) => {
     const command = commands.get(commandName);
     if (command) {
       if (!command.canExecute || command.canExecute()) {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { EditorProvider, useEditor } from '../context/EditorContext';
 import { Toolbar } from './Toolbar';
 import { EditorContent } from './EditorContent';

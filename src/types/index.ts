@@ -15,7 +15,7 @@ export interface PluginContext {
   getContent: () => string;
   setContent: (content: string) => void;
   insertContent: (content: string) => void;
-  execCommand: (command: string, value?: any) => void;
+  execCommand: (command: string, value?: unknown) => void;
   registerCommand: (command: EditorCommand) => void;
   registerToolbarButton: (button: ToolbarButton) => void;
 }
@@ -39,7 +39,7 @@ export interface ToolbarButton {
   label?: string;
   title?: string;
   command?: string;
-  value?: any;
+  value?: unknown;
   isActive?: () => boolean;
   onClick?: () => void;
   group?: string;
@@ -49,7 +49,7 @@ export interface ToolbarButton {
 
 export interface EditorCommand {
   name: string;
-  execute: (value?: any) => void;
+  execute: (value?: unknown) => void;
   canExecute?: () => boolean;
 }
 
@@ -116,6 +116,6 @@ export interface StatusBarInfo {
   wordCount?: number;
   charCount?: number;
   lineCount?: number;
-  custom?: Record<string, any>;
+  custom?: Record<string, unknown>;
 }
 
