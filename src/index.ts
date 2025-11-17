@@ -3,6 +3,7 @@ export { Editor } from './components/Editor';
 export { Toolbar } from './components/Toolbar';
 export { EditorContent } from './components/EditorContent';
 export { StatusBar } from './components/StatusBar';
+export { Modal } from './components/Modal';
 
 // Context and hooks
 export { EditorProvider, useEditor } from './context/EditorContext';
@@ -34,7 +35,10 @@ export {
   listsPlugin,
   alignmentPlugin,
   linksPlugin,
-  defaultPlugins
+  videoPlugin,
+  defaultPlugins,
+  LinkModalWrapper,
+  VideoModalWrapper
 } from './plugins';
 
 // Styles

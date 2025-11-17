@@ -12,6 +12,10 @@
   * [Theming](theming.md)
   * [Debugging](debugging.md)
 
+* Features
+  * [Link Insertion](features/link-insertion.md)
+  * [Video Embedding](features/video-embedding.md)
+
 * Plugins
   * [Plugin System](plugins/README.md)
   * [Built-in Plugins](plugins/built-in-plugins.md)
@@ -26,6 +30,7 @@
 
 * API Reference
   * [Complete API Reference](api-reference.md)
+  * [Modal Component](components/modal.md)
 
 * Resources
   * [GitHub](https://github.com/AkincanD/react-editor)

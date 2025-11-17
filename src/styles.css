@@ -89,7 +89,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-center: center;
+  justify-content: center;
   transition: var(--reactEditor-transition);
   font-size: 14px;
   font-weight: 500;
@@ -161,6 +161,7 @@
   max-width: 100%;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  cursor: text;
 }
 
 .reactEditor_contentEditable:empty:before {
@@ -514,4 +515,276 @@
 
 .reactEditor_toolbarButton {
   animation: reactEditor_fadeIn 0.2s ease-out;
+}
+
+/* Modal Styles */
+.reactEditor_modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: reactEditor_fadeIn 0.2s ease-out;
+}
+
+.reactEditor_modal {
+  background-color: var(--reactEditor-bg-light);
+  border-radius: 8px;
+  box-shadow: var(--reactEditor-shadow-lg);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: reactEditor_slideUp 0.3s ease-out;
+}
+
+.reactEditor_dark .reactEditor_modal {
+  background-color: var(--reactEditor-bg-dark);
+}
+
+.reactEditor_modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--reactEditor-border-light);
+}
+
+.reactEditor_dark .reactEditor_modalHeader {
+  border-bottom-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_modalTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--reactEditor-text-light);
+}
+
+.reactEditor_dark .reactEditor_modalTitle {
+  color: var(--reactEditor-text-dark);
+}
+
+.reactEditor_modalCloseButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--reactEditor-text-light);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: var(--reactEditor-transition);
+}
+
+.reactEditor_dark .reactEditor_modalCloseButton {
+  color: var(--reactEditor-text-dark);
+}
+
+.reactEditor_modalCloseButton:hover {
+  background-color: var(--reactEditor-hover-light);
+}
+
+.reactEditor_dark .reactEditor_modalCloseButton:hover {
+  background-color: var(--reactEditor-hover-dark);
+}
+
+.reactEditor_modalBody {
+  padding: 20px;
+}
+
+.reactEditor_modalFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--reactEditor-border-light);
+}
+
+.reactEditor_dark .reactEditor_modalFooter {
+  border-top-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_formGroup {
+  margin-bottom: 16px;
+}
+
+.reactEditor_formGroup:last-child {
+  margin-bottom: 0;
+}
+
+.reactEditor_label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--reactEditor-text-light);
+}
+
+.reactEditor_dark .reactEditor_label {
+  color: var(--reactEditor-text-dark);
+}
+
+.reactEditor_input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--reactEditor-border-light);
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: var(--reactEditor-bg-light);
+  color: var(--reactEditor-text-light);
+  transition: var(--reactEditor-transition);
+}
+
+.reactEditor_dark .reactEditor_input {
+  background-color: var(--reactEditor-bg-dark);
+  color: var(--reactEditor-text-dark);
+  border-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.reactEditor_dark .reactEditor_input:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+}
+
+.reactEditor_button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--reactEditor-transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.reactEditor_buttonPrimary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.reactEditor_buttonPrimary:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.reactEditor_buttonSecondary {
+  background-color: var(--reactEditor-hover-light);
+  color: var(--reactEditor-text-light);
+}
+
+.reactEditor_dark .reactEditor_buttonSecondary {
+  background-color: var(--reactEditor-hover-dark);
+  color: var(--reactEditor-text-dark);
+}
+
+.reactEditor_buttonSecondary:hover:not(:disabled) {
+  background-color: var(--reactEditor-border-light);
+}
+
+.reactEditor_dark .reactEditor_buttonSecondary:hover:not(:disabled) {
+  background-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.reactEditor_checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.reactEditor_checkboxInput {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.reactEditor_checkboxLabel {
+  font-size: 14px;
+  color: var(--reactEditor-text-light);
+  cursor: pointer;
+}
+
+.reactEditor_dark .reactEditor_checkboxLabel {
+  color: var(--reactEditor-text-dark);
+}
+
+.reactEditor_advancedToggle {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--reactEditor-border-light);
+}
+
+.reactEditor_dark .reactEditor_advancedToggle {
+  border-top-color: var(--reactEditor-border-dark);
+}
+
+.reactEditor_advancedContent {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reactEditor_inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Video embed styles */
+.reactEditor_contentEditable .reactEditor_videoWrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  margin: 1em 0;
+  border-radius: 8px;
+}
+
+.reactEditor_contentEditable .reactEditor_videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 8px;
+}
+
+/* Slide up animation */
+@keyframes reactEditor_slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

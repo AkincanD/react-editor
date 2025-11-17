@@ -14,6 +14,8 @@ A powerful, extensible, and beautiful rich text editor for React with TypeScript
 - ⚛️ **React 18+ Compatible** - Built for modern React applications
 - 🌙 **Dark Mode** - Built-in theme switching support
 - 💅 **Pure CSS** - No external CSS framework required (33% smaller bundle)
+- 🔗 **Link Insertion** - Beautiful modal interface for adding links
+- 🎥 **Video Embedding** - Easy YouTube & Vimeo video embedding
 - 👁️ **View Source** - Toggle between visual and HTML source code modes
 - 🐛 **Debug Console** - Advanced debugging tools for development
 - ⚡ **Next.js Ready** - Perfect integration with Next.js
@@ -79,10 +81,20 @@ import {
   headingsPlugin,         // H1, H2, H3, Paragraph
   listsPlugin,           // Bullet and numbered lists
   alignmentPlugin,       // Text alignment
-  linksPlugin,           // Links
+  linksPlugin,           // Links with modal interface
+  videoPlugin,           // YouTube & Vimeo video embedding
   defaultPlugins         // All plugins combined
 } from '@akincand/react-editor';
 ```
+
+### Features by Plugin
+
+- **Basic Formatting**: Bold, Italic, Underline, Strikethrough
+- **Headings**: H1, H2, H3, Paragraph
+- **Lists**: Bullet List, Numbered List
+- **Alignment**: Left, Center, Right, Justify
+- **Links**: Modal-based link insertion with custom text
+- **Videos**: Responsive video embedding (YouTube & Vimeo)
 
 [Learn more about plugins →](https://kuardscreative.gitbook.io/react-editor/plugins)
 

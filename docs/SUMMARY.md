@@ -14,6 +14,11 @@
 * [Debugging](debugging.md)
 * [Next.js Integration](nextjs-integration.md)
 
+## Features
+
+* [Link Insertion](features/link-insertion.md)
+* [Video Embedding](features/video-embedding.md)
+
 ## Plugins
 
 * [Plugin System](plugins/README.md)
@@ -27,6 +32,7 @@
 * [Complete API Reference](api-reference.md)
 * [Editor Component](api/editor.md)
 * [Toolbar Component](api/toolbar.md)
+* [Modal Component](components/modal.md)
 * [Types](api/types.md)
 * [Hooks](api/hooks.md)
 

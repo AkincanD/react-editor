@@ -5,6 +5,7 @@ import { EditorContent } from './EditorContent';
 import { StatusBar } from './StatusBar';
 import { EditorConfig, PluginContext } from '../types';
 import { setDebugMode, debugLog, debugGroup, debugGroupEnd } from '../utils/logger';
+import { LinkModalWrapper, VideoModalWrapper } from '../plugins';
 import '../styles.css';
 
 interface EditorProps extends EditorConfig {
@@ -155,20 +156,25 @@ const EditorInner: React.FC<EditorConfig> = ({
   };
 
   return (
-    <div
-      className={`reactEditor_container ${theme.mode === 'dark' ? 'reactEditor_dark' : ''} ${className}`}
-      style={containerStyle}
-    >
-      <Toolbar buttons={toolbar} showSourceButton={showSourceButton} />
-      <EditorContent
-        placeholder={placeholder}
-        readOnly={readOnly}
-        onChange={onChange}
-        onBlur={onBlur}
-        onFocus={onFocus}
-      />
-      <StatusBar />
-    </div>
+    <>
+      <div
+        className={`reactEditor_container ${theme.mode === 'dark' ? 'reactEditor_dark' : ''} ${className}`}
+        style={containerStyle}
+      >
+        <Toolbar buttons={toolbar} showSourceButton={showSourceButton} />
+        <EditorContent
+          placeholder={placeholder}
+          readOnly={readOnly}
+          onChange={onChange}
+          onBlur={onBlur}
+          onFocus={onFocus}
+        />
+        <StatusBar />
+      </div>
+      {/* Modal components for plugins */}
+      <LinkModalWrapper />
+      <VideoModalWrapper />
+    </>
   );
 };
 

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2025-11-17
+
+### Fixed
+- **React 19 Support**: Updated peer dependencies to support React 18 and React 19
+  - `react: ^18.0.0 || ^19.0.0`
+  - `react-dom: ^18.0.0 || ^19.0.0`
+  - Fixes `ERESOLVE` npm installation errors with React 19
+
 ## [1.0.3] - 2025-11-17
 
 ### Added
