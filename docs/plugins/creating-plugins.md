@@ -7,7 +7,7 @@ Learn how to create powerful custom plugins for React Editor.
 Start with this template:
 
 ```tsx
-import { EditorPlugin } from 'react-editor';
+import { EditorPlugin } from '@akincand/react-editor';
 
 export const myPlugin: EditorPlugin = {
   name: 'myPlugin',
@@ -402,7 +402,7 @@ async function saveContent(content: string) {
 Use TypeScript for better development experience:
 
 ```tsx
-import { EditorPlugin, PluginContext } from 'react-editor';
+import { EditorPlugin, PluginContext } from '@akincand/react-editor';
 
 interface MyPluginConfig {
   apiKey: string;

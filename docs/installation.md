@@ -7,19 +7,19 @@ React Editor can be installed using npm, yarn, or pnpm:
 ### npm
 
 ```bash
-npm install react-editor
+npm install @akincand/react-editor
 ```
 
 ### yarn
 
 ```bash
-yarn add react-editor
+yarn add @akincand/react-editor
 ```
 
 ### pnpm
 
 ```bash
-pnpm add react-editor
+pnpm add @akincand/react-editor
 ```
 
 ## Peer Dependencies
@@ -48,7 +48,7 @@ React Editor is written in TypeScript and includes type definitions out of the b
 After installation, verify that the package is correctly installed:
 
 ```tsx
-import { Editor } from 'react-editor';
+import { Editor } from '@akincand/react-editor';
 
 console.log(Editor); // Should output the Editor component
 ```
@@ -79,7 +79,7 @@ React Editor works perfectly with Create React App without any additional config
 While not recommended for production, you can use React Editor via CDN:
 
 ```html
-<script src="https://unpkg.com/react-editor@latest/dist/index.js"></script>
+<script src="https://unpkg.com/@akincand/react-editor@latest/dist/index.js"></script>
 ```
 
 ## Troubleshooting

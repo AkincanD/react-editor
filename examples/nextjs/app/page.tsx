@@ -1,6 +1,6 @@
 'use client';
 
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 import { useState } from 'react';
 
 export default function Home() {

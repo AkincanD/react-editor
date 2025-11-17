@@ -2,7 +2,7 @@
 
 A powerful, extensible, and beautiful rich text editor for React with TypeScript support.
 
-[![npm version](https://badge.fury.io/js/react-editor.svg)](https://badge.fury.io/js/react-editor)
+[![npm version](https://badge.fury.io/akincan/react-editor.svg)](https://badge.fury.io/js/react-editor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## ✨ Features
@@ -21,19 +21,19 @@ A powerful, extensible, and beautiful rich text editor for React with TypeScript
 ## 📦 Installation
 
 ```bash
-npm install react-editor
+npm install @akincand/react-editor
 ```
 
 or with yarn:
 
 ```bash
-yarn add react-editor
+yarn add @akincand/react-editor
 ```
 
 or with pnpm:
 
 ```bash
-pnpm add react-editor
+pnpm add @akincand/react-editor
 ```
 
 ## 🚀 Quick Start
@@ -41,7 +41,7 @@ pnpm add react-editor
 ### Basic Usage
 
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 
 function App() {
   return (
@@ -57,7 +57,7 @@ function App() {
 ### With Custom Configuration
 
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 
 function App() {
   const handleChange = (content: string) => {
@@ -86,7 +86,7 @@ function App() {
 ### Light and Dark Mode
 
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -108,7 +108,7 @@ function App() {
 ### Using the Theme Hook
 
 ```tsx
-import { Editor, useEditorTheme } from 'react-editor';
+import { Editor, useEditorTheme } from '@akincand/react-editor';
 
 function EditorWithThemeToggle() {
   return (
@@ -142,7 +142,7 @@ The library comes with several built-in plugins:
 ### Using Individual Plugins
 
 ```tsx
-import { Editor, basicFormattingPlugin, headingsPlugin } from 'react-editor';
+import { Editor, basicFormattingPlugin, headingsPlugin } from '@akincand/react-editor';
 
 function App() {
   return (
@@ -158,7 +158,7 @@ function App() {
 Creating custom plugins is straightforward:
 
 ```tsx
-import { EditorPlugin } from 'react-editor';
+import { EditorPlugin } from '@akincand/react-editor';
 
 const myCustomPlugin: EditorPlugin = {
   name: 'myCustomPlugin',
@@ -224,7 +224,7 @@ function App() {
 ### Access Editor Instance
 
 ```tsx
-import { Editor, EditorInstance } from 'react-editor';
+import { Editor, EditorInstance } from '@akincand/react-editor';
 import { useRef } from 'react';
 
 function App() {
@@ -252,7 +252,7 @@ function App() {
 ### Custom Toolbar
 
 ```tsx
-import { Editor, ToolbarButton } from 'react-editor';
+import { Editor, ToolbarButton } from '@akincand/react-editor';
 
 function App() {
   const customToolbar: ToolbarButton[] = [
@@ -321,7 +321,7 @@ export default function EditorPage() {
 import dynamic from 'next/dynamic';
 
 const Editor = dynamic(
-  () => import('react-editor').then((mod) => mod.Editor),
+  () => import('@akincand/react-editor').then((mod) => mod.Editor),
   { ssr: false }
 );
 
@@ -353,7 +353,7 @@ MIT © [AkincanD](https://github.com/AkincanD)
 - [Documentation](https://github.com/AkincanD/react-editor/docs)
 - [Examples](https://github.com/AkincanD/react-editor/examples)
 - [GitHub](https://github.com/AkincanD/react-editor)
-- [npm](https://www.npmjs.com/package/react-editor)
+- [npm](https://www.npmjs.com/package/@akincand/react-editor)
 
 ## 💖 Support
 

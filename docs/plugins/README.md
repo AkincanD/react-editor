@@ -33,7 +33,7 @@ interface EditorPlugin {
 ### Using Built-in Plugins
 
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 
 <Editor plugins={defaultPlugins} />
 ```
@@ -45,7 +45,7 @@ import {
   Editor,
   basicFormattingPlugin,
   headingsPlugin
-} from 'react-editor';
+} from '@akincand/react-editor';
 
 <Editor plugins={[basicFormattingPlugin, headingsPlugin]} />
 ```
@@ -53,7 +53,7 @@ import {
 ### Mixing Built-in and Custom Plugins
 
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 import { myCustomPlugin } from './my-plugin';
 
 <Editor plugins={[...defaultPlugins, myCustomPlugin]} />
@@ -64,7 +64,7 @@ import { myCustomPlugin } from './my-plugin';
 Here's a simple plugin example:
 
 ```tsx
-import { EditorPlugin } from 'react-editor';
+import { EditorPlugin } from '@akincand/react-editor';
 
 const highlightPlugin: EditorPlugin = {
   name: 'highlight',

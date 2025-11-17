@@ -7,7 +7,7 @@ Learn the fundamentals of using React Editor in your application.
 The most basic editor setup:
 
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 
 function MyEditor() {
   return <Editor plugins={defaultPlugins} />;
@@ -112,7 +112,7 @@ Get a reference to the editor instance:
 
 ```tsx
 import { useRef } from 'react';
-import { Editor, EditorInstance } from 'react-editor';
+import { Editor, EditorInstance } from '@akincand/react-editor';
 
 function MyEditor() {
   const editorRef = useRef<EditorInstance | null>(null);
@@ -149,7 +149,7 @@ import {
   basicFormattingPlugin,
   headingsPlugin,
   listsPlugin
-} from 'react-editor';
+} from '@akincand/react-editor';
 
 <Editor
   plugins={[
@@ -182,7 +182,7 @@ import {
   Editor, 
   defaultPlugins,
   EditorInstance 
-} from 'react-editor';
+} from '@akincand/react-editor';
 
 function CompleteEditor() {
   const [content, setContent] = useState('');

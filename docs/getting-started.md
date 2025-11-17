@@ -15,15 +15,15 @@ Before you begin, ensure you have:
 Install the package using your preferred package manager:
 
 ```bash
-npm install react-editor
+npm install @akincand/react-editor
 ```
 
 ```bash
-yarn add react-editor
+yarn add @akincand/react-editor
 ```
 
 ```bash
-pnpm add react-editor
+pnpm add @akincand/react-editor
 ```
 
 ## Your First Editor
@@ -31,7 +31,7 @@ pnpm add react-editor
 Create a simple editor component:
 
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 
 function App() {
   return (
@@ -89,7 +89,7 @@ Or use dynamic imports for the Pages Router:
 import dynamic from 'next/dynamic';
 
 const Editor = dynamic(
-  () => import('react-editor').then(mod => mod.Editor),
+  () => import('@akincand/react-editor').then(mod => mod.Editor),
   { ssr: false }
 );
 ```

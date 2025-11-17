@@ -1,4 +1,4 @@
-import { Editor, EditorPlugin, defaultPlugins } from 'react-editor';
+import { Editor, EditorPlugin, defaultPlugins } from '@akincand/react-editor';
 
 // Custom plugin that adds emoji support
 const emojiPlugin: EditorPlugin = {

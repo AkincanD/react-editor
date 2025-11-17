@@ -31,7 +31,7 @@ React Editor is a modern, feature-rich WYSIWYG editor built specifically for Rea
 
 - **GitHub**: [AkincanD/react-editor](https://github.com/AkincanD/react-editor)
 - **Issues**: [Report bugs or request features](https://github.com/AkincanD/react-editor/issues)
-- **npm**: [react-editor](https://www.npmjs.com/package/react-editor)
+- **npm**: [@akincand/react-editor](https://www.npmjs.com/package/@akincand/react-editor)
 
 ## License
 

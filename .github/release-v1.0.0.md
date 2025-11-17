@@ -48,13 +48,13 @@ We're excited to announce the first stable release of **React Editor** - a power
 ## 📦 Installation
 
 ```bash
-npm install react-editor
+npm install @akincand/react-editor
 ```
 
 ## 🚀 Quick Start
 
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 
 function App() {
   return (
@@ -71,14 +71,14 @@ function App() {
 
 ### Basic Example
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 
 <Editor plugins={defaultPlugins} />
 ```
 
 ### With Theme Switching
 ```tsx
-import { Editor, defaultPlugins } from 'react-editor';
+import { Editor, defaultPlugins } from '@akincand/react-editor';
 import { useState } from 'react';
 
 function App() {
@@ -97,7 +97,7 @@ function App() {
 
 ### Custom Plugin
 ```tsx
-import { Editor, EditorPlugin, defaultPlugins } from 'react-editor';
+import { Editor, EditorPlugin, defaultPlugins } from '@akincand/react-editor';
 
 const myPlugin: EditorPlugin = {
   name: 'myPlugin',
@@ -117,12 +117,12 @@ const myPlugin: EditorPlugin = {
 - **Documentation:** [docs](https://github.com/AkincanD/react-editor/tree/main/docs)
 - **Examples:** [examples](https://github.com/AkincanD/react-editor/tree/main/examples)
 - **GitHub:** https://github.com/AkincanD/react-editor
-- **npm:** https://www.npmjs.com/package/react-editor
+- **npm:** https://www.npmjs.com/package/@akincand/react-editor
 
 ## 📝 What's Included
 
 ```
-react-editor@1.0.0
+@akincand/react-editor@1.0.0
 ├── Core Components
 │   ├── Editor
 │   ├── Toolbar

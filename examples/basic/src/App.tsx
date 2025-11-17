@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Editor, defaultPlugins, EditorInstance } from 'react-editor';
+import { Editor, defaultPlugins, EditorInstance } from '@akincand/react-editor';
 
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
