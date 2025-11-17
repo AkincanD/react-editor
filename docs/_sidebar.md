@@ -15,12 +15,16 @@
   * [Plugin System](plugins/README.md)
   * [Built-in Plugins](plugins/built-in-plugins.md)
   * [Creating Plugins](plugins/creating-plugins.md)
-  * [Plugin API](plugins/plugin-api.md)
+  * [Plugin API Reference](plugins/plugin-api.md)
+  * [Publishing Your Plugin](plugins/publishing-plugins.md)
 
 * Examples
   * [Basic Example](examples/basic.md)
   * [Custom Plugin](examples/custom-plugin.md)
   * [Next.js Integration](examples/nextjs.md)
+
+* API Reference
+  * [Complete API Reference](api-reference.md)
 
 * Resources
   * [GitHub](https://github.com/AkincanD/react-editor)

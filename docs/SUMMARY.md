@@ -18,11 +18,12 @@
 * [Plugin System](plugins/README.md)
 * [Built-in Plugins](plugins/built-in-plugins.md)
 * [Creating Custom Plugins](plugins/creating-plugins.md)
-* [Plugin API](plugins/plugin-api.md)
+* [Plugin API Reference](plugins/plugin-api.md)
+* [Publishing Your Plugin](plugins/publishing-plugins.md)
 
 ## API Reference
 
-* [API Reference](api-reference.md)
+* [Complete API Reference](api-reference.md)
 * [Editor Component](api/editor.md)
 * [Toolbar Component](api/toolbar.md)
 * [Types](api/types.md)
@@ -31,7 +32,7 @@
 ## Examples
 
 * [Examples Overview](examples/README.md)
-* [Basic Example](examples/basic.md)
+* [Basic Examples](examples/basic.md)
 * [Custom Plugin Example](examples/custom-plugin.md)
 * [Next.js Example](examples/nextjs.md)
 * [Advanced Usage](examples/advanced.md)
