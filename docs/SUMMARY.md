@@ -14,6 +14,10 @@
 * [Debugging](debugging.md)
 * [Next.js Integration](nextjs-integration.md)
 
+## Customization
+
+* [Custom Styling](customization/custom-styling.md)
+
 ## Features
 
 * [Link Insertion](features/link-insertion.md)

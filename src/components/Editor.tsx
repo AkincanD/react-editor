@@ -26,6 +26,7 @@ const EditorInner: React.FC<EditorConfig> = ({
   maxHeight,
   minHeight,
   autoFocus,
+  customStyles,
   showSourceButton = false,
   debugConsole = false
 }) => {
@@ -152,7 +153,8 @@ const EditorInner: React.FC<EditorConfig> = ({
   const containerStyle: React.CSSProperties = {
     height,
     maxHeight,
-    minHeight: minHeight || '300px'
+    minHeight: minHeight || '300px',
+    ...customStyles
   };
 
   return (

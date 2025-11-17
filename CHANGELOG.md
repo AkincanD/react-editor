@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2025-11-17
+
+### Added
+- **Custom Styles Prop**: New `customStyles` prop for inline CSS customization
+  - Accepts React CSSProperties
+  - Merged with default container styles
+  - Full CSS property support
+- **Enhanced Modal Design**: Completely redesigned modal system
+  - Backdrop blur effect with glassmorphism
+  - Smooth scale and slide animations
+  - Gradient buttons with ripple effects
+  - Fully responsive (desktop, tablet, mobile)
+  - Bottom sheet style on mobile devices
+  - Improved dark mode styling
+- **Custom Styling Documentation**: Comprehensive guide with examples
+  - CSS classes reference
+  - CSS variables guide
+  - Multiple design system examples (Neumorphic, Glassmorphism, Terminal, Magazine)
+  - Live StackBlitz demo integration
+  - Best practices and troubleshooting
+
+### Fixed
+- **Video Embedding**: Fixed video insertion not working
+  - Removed whitespace from HTML strings
+  - Improved insertion logic
+  - Better selection handling
+  - Videos now insert at end of content when no selection
+- **Modal UI Issues**: Fixed responsiveness and styling problems
+  - Better input field styling with hover states
+  - Improved button styling with transforms
+  - Fixed footer background colors
+  - Better spacing and padding across all breakpoints
+
+### Improved
+- Modal animations now use cubic-bezier easing
+- Better form element styling
+- Enhanced checkbox design with accent colors
+- Advanced options panel with background styling
+- Input fields with placeholder colors and focus states
+
 ## [1.0.4] - 2025-11-17
 
 ### Fixed

@@ -1,6 +1,6 @@
 {
   "name": "@akincand/react-editor",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A powerful, extensible, and beautiful rich text editor for React with TypeScript support",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

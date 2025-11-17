@@ -76,28 +76,10 @@ const VideoModal: React.FC<{
 
     if (showAdvanced && width && height) {
       // Custom dimensions
-      html = `
-        <div class="reactEditor_videoWrapper" style="width: ${width}; padding-bottom: 0; height: ${height};">
-          <iframe
-            src="${embedUrl}"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      `;
+      html = `<div class="reactEditor_videoWrapper" style="width: ${width}; padding-bottom: 0; height: ${height};"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
     } else {
       // Responsive (default)
-      html = `
-        <div class="reactEditor_videoWrapper">
-          <iframe
-            src="${embedUrl}"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      `;
+      html = `<div class="reactEditor_videoWrapper"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
     }
 
     onInsert(html);
@@ -233,15 +215,28 @@ export const videoPlugin: EditorPlugin = {
   
   onLoad: (context) => {
     videoModalState.insertContent = (html: string) => {
+      const editor = context.editor;
+      if (!editor) return;
+      
       const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0) {
-        // Insert at cursor position
-        context.insertContent(html);
+      if (selection && selection.rangeCount > 0 && !selection.isCollapsed) {
+        // Replace selection with video
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+        const fragment = range.createContextualFragment(html);
+        range.insertNode(fragment);
+        
+        // Move cursor after inserted content
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
       } else {
-        // Insert at the beginning
+        // Insert at end of content
         const currentContent = context.getContent();
-        context.setContent(html + currentContent);
+        context.setContent(currentContent + html);
       }
+      
+      debugLog('VIDEO', 'Video inserted successfully');
     };
   },
 

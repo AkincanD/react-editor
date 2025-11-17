@@ -86,6 +86,7 @@ export interface EditorConfig {
   maxHeight?: string | number;
   minHeight?: string | number;
   className?: string;
+  customStyles?: React.CSSProperties;
   showSourceButton?: boolean;
   debugConsole?: boolean;
   onChange?: (content: string) => void;

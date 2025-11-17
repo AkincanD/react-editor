@@ -12,6 +12,9 @@
   * [Theming](theming.md)
   * [Debugging](debugging.md)
 
+* Customization
+  * [Custom Styling](customization/custom-styling.md)
+
 * Features
   * [Link Insertion](features/link-insertion.md)
   * [Video Embedding](features/video-embedding.md)
