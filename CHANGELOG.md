@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2025-11-17
+
+### Added
+- **Debug Console System**: Advanced debugging with `debugConsole` prop
+  - Color-coded console output with categories (INIT, PLUGIN, COMMAND, TOOLBAR, CONTENT, VIEW)
+  - Timestamped logs for better tracking
+  - Grouped logs for related operations
+  - Debug API: `debugLog`, `debugWarn`, `debugError`, `debugGroup`, `debugGroupEnd`
+  - Available for use in custom plugins
+
+### Documentation
+- Added comprehensive Debugging guide with examples
+- Added Debug API reference
+- Simplified README.md
+- Added GitBook documentation link: https://kuardscreative.gitbook.io/react-editor
+
 ## [1.0.2] - 2025-11-17
 
 ### Added
