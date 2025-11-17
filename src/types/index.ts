@@ -87,6 +87,7 @@ export interface EditorConfig {
   minHeight?: string | number;
   className?: string;
   showSourceButton?: boolean;
+  debugConsole?: boolean;
   onChange?: (content: string) => void;
   onBlur?: () => void;
   onFocus?: () => void;

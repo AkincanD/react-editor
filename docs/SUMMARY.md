@@ -11,6 +11,7 @@
 * [Basic Usage](basic-usage.md)
 * [Configuration](configuration.md)
 * [Theming](theming.md)
+* [Debugging](debugging.md)
 * [Next.js Integration](nextjs-integration.md)
 
 ## Plugins

@@ -10,6 +10,7 @@
   * [Basic Usage](basic-usage.md)
   * [Configuration](configuration.md)
   * [Theming](theming.md)
+  * [Debugging](debugging.md)
 
 * Plugins
   * [Plugin System](plugins/README.md)

@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useEditor } from '../context/EditorContext';
+import { debugLog } from '../utils/logger';
 
 interface EditorContentProps {
   placeholder?: string;
@@ -22,6 +23,10 @@ export const EditorContent: React.FC<EditorContentProps> = ({
 
   const handleInput = useCallback((e: React.FormEvent<HTMLDivElement>) => {
     const newContent = e.currentTarget.innerHTML;
+    debugLog('CONTENT', 'Content changed (visual mode)', {
+      length: newContent.length,
+      preview: newContent.substring(0, 50) + (newContent.length > 50 ? '...' : '')
+    });
     setContent(newContent);
     if (onChange) {
       onChange(newContent);
@@ -36,6 +41,10 @@ export const EditorContent: React.FC<EditorContentProps> = ({
 
   const handleSourceChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
+    debugLog('CONTENT', 'Content changed (source mode)', {
+      length: newContent.length,
+      preview: newContent.substring(0, 50) + (newContent.length > 50 ? '...' : '')
+    });
     setContent(newContent);
     if (onChange) {
       onChange(newContent);

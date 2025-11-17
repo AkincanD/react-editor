@@ -8,6 +8,9 @@ export { StatusBar } from './components/StatusBar';
 export { EditorProvider, useEditor } from './context/EditorContext';
 export { useEditorTheme } from './hooks/useEditorTheme';
 
+// Utilities
+export { setDebugMode, debugLog, debugWarn, debugError, debugGroup, debugGroupEnd } from './utils/logger';
+
 // Types
 export type {
   EditorPlugin,

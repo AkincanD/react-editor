@@ -100,6 +100,24 @@ function App() {
 }
 ```
 
+### With Debug Console
+
+Enable debug logging for development:
+
+```tsx
+import { Editor, defaultPlugins } from '@akincand/react-editor';
+
+function App() {
+  return (
+    <Editor
+      plugins={defaultPlugins}
+      debugConsole={true}  // Enable debug logging
+      placeholder="Start typing..."
+    />
+  );
+}
+```
+
 ## 🎨 Themes
 
 ### Light and Dark Mode

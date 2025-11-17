@@ -4,6 +4,7 @@ import { Toolbar } from './Toolbar';
 import { EditorContent } from './EditorContent';
 import { StatusBar } from './StatusBar';
 import { EditorConfig, PluginContext } from '../types';
+import { setDebugMode, debugLog, debugGroup, debugGroupEnd } from '../utils/logger';
 import '../styles.css';
 
 interface EditorProps extends EditorConfig {
@@ -24,7 +25,8 @@ const EditorInner: React.FC<EditorConfig> = ({
   maxHeight,
   minHeight,
   autoFocus,
-  showSourceButton = false
+  showSourceButton = false,
+  debugConsole = false
 }) => {
   const {
     content,
@@ -38,16 +40,36 @@ const EditorInner: React.FC<EditorConfig> = ({
     editorRef
   } = useEditor();
 
+  // Set debug mode
+  useEffect(() => {
+    setDebugMode(debugConsole);
+    if (debugConsole) {
+      debugLog('INIT', 'Editor initializing...');
+    }
+  }, [debugConsole]);
+
   // Track initialized plugins to prevent duplicate registration
   const initializedPluginsRef = useRef<Set<string>>(new Set());
 
   // Initialize plugins only once
   useEffect(() => {
+    if (plugins.length > 0) {
+      debugGroup(`🔌 Loading ${plugins.length} plugin(s)`, true);
+    }
+
     plugins.forEach(plugin => {
       // Skip if already initialized
       if (initializedPluginsRef.current.has(plugin.name)) {
+        debugLog('PLUGIN', `Skipping already initialized plugin: ${plugin.name}`);
         return;
       }
+
+      debugLog('PLUGIN', `Registering plugin: ${plugin.name}`, {
+        version: plugin.version,
+        hasToolbarButtons: !!plugin.toolbarButtons?.length,
+        hasCommands: !!plugin.commands?.length,
+        hasShortcuts: !!plugin.shortcuts?.length
+      });
 
       registerPlugin(plugin);
       initializedPluginsRef.current.add(plugin.name);
@@ -69,19 +91,37 @@ const EditorInner: React.FC<EditorConfig> = ({
 
       // Register plugin's toolbar buttons
       if (plugin.toolbarButtons) {
+        debugLog('PLUGIN', `  ↳ Registering ${plugin.toolbarButtons.length} toolbar button(s)`, 
+          plugin.toolbarButtons.map(b => b.id)
+        );
         plugin.toolbarButtons.forEach(button => registerToolbarButton(button));
       }
 
       // Register plugin's commands
       if (plugin.commands) {
+        debugLog('PLUGIN', `  ↳ Registering ${plugin.commands.length} command(s)`, 
+          plugin.commands.map(c => c.name)
+        );
         plugin.commands.forEach(command => registerCommand(command));
+      }
+
+      // Register keyboard shortcuts
+      if (plugin.shortcuts) {
+        debugLog('PLUGIN', `  ↳ Registering ${plugin.shortcuts.length} keyboard shortcut(s)`);
       }
 
       // Call plugin's onLoad
       if (plugin.onLoad) {
+        debugLog('PLUGIN', `  ↳ Calling onLoad for ${plugin.name}`);
         plugin.onLoad(pluginContext);
       }
+
+      debugLog('PLUGIN', `✓ Plugin ${plugin.name} loaded successfully`);
     });
+
+    if (plugins.length > 0) {
+      debugGroupEnd();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,10 +130,16 @@ const EditorInner: React.FC<EditorConfig> = ({
     if (onReady && editorRef.current) {
       const instance = getEditorInstance();
       if (instance) {
+        debugLog('INIT', '✓ Editor ready and mounted', {
+          plugins: plugins.length,
+          theme: theme.mode,
+          readOnly,
+          showSourceButton
+        });
         onReady(instance);
       }
     }
-  }, [onReady, getEditorInstance, editorRef]);
+  }, [onReady, getEditorInstance, editorRef, plugins.length, theme.mode, readOnly, showSourceButton]);
 
   // Auto focus
   useEffect(() => {

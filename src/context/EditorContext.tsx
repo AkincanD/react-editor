@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useRef, ReactNode } from 'react';
 import { EditorPlugin, EditorCommand, ToolbarButton, EditorInstance, EditorTheme } from '../types';
+import { debugLog, debugWarn } from '../utils/logger';
 
 interface EditorContextValue {
   content: string;
@@ -73,6 +74,7 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
     setCommands(prev => {
       const newCommands = new Map(prev);
       newCommands.set(command.name, command);
+      debugLog('COMMAND', `Registered command: ${command.name}`);
       return newCommands;
     });
   }, []);
@@ -81,24 +83,36 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
     const command = commands.get(commandName);
     if (command) {
       if (!command.canExecute || command.canExecute()) {
+        debugLog('COMMAND', `Executing: ${commandName}`, value !== undefined ? { value } : undefined);
         command.execute(value);
+      } else {
+        debugWarn('COMMAND', `Cannot execute ${commandName} (canExecute returned false)`);
       }
     } else {
-      console.warn(`Command ${commandName} not found`);
+      debugWarn('COMMAND', `Command not found: ${commandName}`);
     }
   }, [commands]);
 
   const registerToolbarButton = useCallback((button: ToolbarButton) => {
     setToolbarButtons(prev => {
       if (prev.find(b => b.id === button.id)) {
+        debugLog('TOOLBAR', `Button already registered: ${button.id}`);
         return prev;
       }
+      debugLog('TOOLBAR', `Registered button: ${button.id}`, {
+        group: button.group,
+        order: button.order
+      });
       return [...prev, button];
     });
   }, []);
 
   const toggleViewSource = useCallback(() => {
-    setViewSource(prev => !prev);
+    setViewSource(prev => {
+      const newValue = !prev;
+      debugLog('VIEW', `View mode changed: ${newValue ? 'Source Code' : 'Visual Editor'}`);
+      return newValue;
+    });
   }, []);
 
   const getEditorInstance = useCallback((): EditorInstance | null => {

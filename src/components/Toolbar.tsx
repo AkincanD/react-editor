@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEditor } from '../context/EditorContext';
 import { ToolbarButton as ToolbarButtonType } from '../types';
+import { debugLog } from '../utils/logger';
 
 interface ToolbarProps {
   buttons?: ToolbarButtonType[];
@@ -14,6 +15,12 @@ export const Toolbar: React.FC<ToolbarProps> = ({ buttons: customButtons, classN
   const buttons = customButtons || toolbarButtons;
 
   const handleButtonClick = (button: ToolbarButtonType) => {
+    debugLog('TOOLBAR', `Button clicked: ${button.id}`, {
+      title: button.title || button.label,
+      command: button.command,
+      hasCustomHandler: !!button.onClick
+    });
+    
     if (button.onClick) {
       button.onClick();
     } else if (button.command) {
