@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2025-11-18
+
+### Fixed
+- **Video/Image Insert Issues**: Fixed multiple critical issues with media insertion
+  - Fixed editor becoming unclickable after video/image insertion
+  - Fixed cursor not being placed correctly after insertion
+  - Fixed focus not being restored to editor after insertion
+  - Fixed content being reset to initial HTML when inserting media (critical bug)
+  - Now uses editor element's current HTML directly instead of state
+  - Added `contenteditable="false"` to video/image wrappers to prevent editing conflicts
+  - Added space after video/image for proper cursor placement
+  - Multiple videos/images can now be inserted without issues
+  - Editor focus is properly restored after each insertion
+- **Modal Dark Mode CSS Selector**: Critical fix for modal dark mode not applying
+  - Modal has `reactEditor_dark` class on itself, not parent container
+  - Updated all CSS selectors to support both patterns:
+    - `.reactEditor_modal.reactEditor_dark` (when modal has class)
+    - `.reactEditor_dark .reactEditor_modal` (when parent has class)
+  - Fixed elements:
+    - Modal background and box shadows
+    - Modal header border color
+    - Modal title text color
+    - Modal close button color and hover
+    - Modal footer background and border
+    - Form labels text color
+    - Input fields (background, border, hover, focus, placeholder)
+    - Primary buttons (background gradient, hover states)
+    - Secondary buttons (background, border, hover states)
+    - Checkbox labels text color
+  - Modals now properly display dark theme when editor is in dark mode
+
 ## [1.0.6] - 2025-11-18
 
 ### Fixed

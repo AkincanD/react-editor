@@ -883,9 +883,11 @@
   overflow: hidden;
   margin: 1em 0;
   border-radius: 8px;
+  display: block;
 }
 
-.reactEditor_contentEditable .reactEditor_videoWrapper iframe {
+.reactEditor_contentEditable .reactEditor_videoWrapper iframe,
+.reactEditor_contentEditable .reactEditor_videoWrapper video {
   position: absolute;
   top: 0;
   left: 0;
@@ -893,6 +895,20 @@
   height: 100%;
   border: 0;
   border-radius: 8px;
+  pointer-events: auto;
+}
+
+/* Image wrapper styles */
+.reactEditor_contentEditable [contenteditable="false"] {
+  display: block;
+  margin: 1em 0;
+}
+
+.reactEditor_contentEditable [contenteditable="false"] img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  pointer-events: auto;
 }
 
 /* Slide up animation */

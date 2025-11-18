@@ -146,7 +146,8 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
           setContent('');
         }
       },
-      getSelection: () => window.getSelection()
+      getSelection: () => window.getSelection(),
+      getEditorElement: () => editorRef.current
     };
   }, []);
 

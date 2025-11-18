@@ -89,16 +89,16 @@ const VideoModal: React.FC<{
     if (videoInfo.provider === 'direct') {
       // Direct video file (HTML5 video element)
       if (showAdvanced && width && height) {
-        html = `<div class="reactEditor_videoWrapper" style="width: ${width}; padding-bottom: 0; height: ${height};"><video controls style="width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
+        html = `<div class="reactEditor_videoWrapper" contenteditable="false" style="width: ${width}; padding-bottom: 0; height: ${height};"><video controls style="width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
       } else {
-        html = `<div class="reactEditor_videoWrapper"><video controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
+        html = `<div class="reactEditor_videoWrapper" contenteditable="false"><video controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
       }
     } else {
       // YouTube or Vimeo (iframe)
       if (showAdvanced && width && height) {
-        html = `<div class="reactEditor_videoWrapper" style="width: ${width}; padding-bottom: 0; height: ${height};"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        html = `<div class="reactEditor_videoWrapper" contenteditable="false" style="width: ${width}; padding-bottom: 0; height: ${height};"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
       } else {
-        html = `<div class="reactEditor_videoWrapper"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        html = `<div class="reactEditor_videoWrapper" contenteditable="false"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
       }
     }
 
@@ -238,23 +238,69 @@ export const videoPlugin: EditorPlugin = {
       const editor = context.editor;
       if (!editor) return;
       
+      const editorElement = editor.getEditorElement();
+      if (!editorElement) return;
+      
+      // Add a space after video for cursor placement
+      const htmlWithSpace = html + '<p><br></p>';
+      
       const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0 && !selection.isCollapsed) {
-        // Replace selection with video
+      if (selection && selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        range.deleteContents();
-        const fragment = range.createContextualFragment(html);
+        
+        if (!selection.isCollapsed) {
+          // Replace selection with video
+          range.deleteContents();
+        }
+        
+        // Insert video with space after
+        const fragment = range.createContextualFragment(htmlWithSpace);
         range.insertNode(fragment);
         
-        // Move cursor after inserted content
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
+        // Move cursor to the paragraph after video
+        const lastChild = fragment.lastChild;
+        if (lastChild && lastChild.nodeType === Node.ELEMENT_NODE) {
+          const newRange = document.createRange();
+          newRange.setStart(lastChild, 0);
+          newRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+        } else {
+          // Fallback: move cursor after inserted content
+          range.collapse(false);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
       } else {
-        // Insert at end of content
-        const currentContent = context.getContent();
-        context.setContent(currentContent + html);
+        // No selection - insert at end of content
+        // Get current HTML directly from editor element, not from state
+        const currentHTML = editorElement.innerHTML || '';
+        const fragment = document.createRange().createContextualFragment(htmlWithSpace);
+        
+        // Append to editor
+        editorElement.appendChild(fragment);
+        
+        // Update content state
+        const newContent = editorElement.innerHTML;
+        context.setContent(newContent);
+        
+        // Set cursor at end
+        setTimeout(() => {
+          const range = document.createRange();
+          range.selectNodeContents(editorElement);
+          range.collapse(false);
+          const newSelection = window.getSelection();
+          if (newSelection) {
+            newSelection.removeAllRanges();
+            newSelection.addRange(range);
+          }
+        }, 0);
       }
+      
+      // Restore focus to editor
+      setTimeout(() => {
+        editorElement.focus();
+      }, 0);
       
       debugLog('VIDEO', 'Video inserted successfully');
     };

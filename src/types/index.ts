@@ -31,6 +31,7 @@ export interface EditorInstance {
   redo: () => void;
   clear: () => void;
   getSelection: () => Selection | null;
+  getEditorElement: () => HTMLDivElement | null;
 }
 
 export interface ToolbarButton {

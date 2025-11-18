@@ -40,10 +40,10 @@ const ImageModal: React.FC<{
       if (width) styleAttr.push(`width: ${width}`);
       if (height) styleAttr.push(`height: ${height}`);
       const style = styleAttr.length > 0 ? ` style="${styleAttr.join('; ')}"` : '';
-      html = `<img src="${url}" alt="${altText}"${style} />`;
+      html = `<div contenteditable="false"><img src="${url}" alt="${altText}"${style} /></div>`;
     } else {
       // Responsive (default)
-      html = `<img src="${url}" alt="${altText}" style="max-width: 100%; height: auto;" />`;
+      html = `<div contenteditable="false"><img src="${url}" alt="${altText}" style="max-width: 100%; height: auto;" /></div>`;
     }
 
     onInsert(html);
@@ -201,23 +201,69 @@ export const imagePlugin: EditorPlugin = {
       const editor = context.editor;
       if (!editor) return;
       
+      const editorElement = editor.getEditorElement();
+      if (!editorElement) return;
+      
+      // Add a space after image for cursor placement
+      const htmlWithSpace = html + '<p><br></p>';
+      
       const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0 && !selection.isCollapsed) {
-        // Replace selection with image
+      if (selection && selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        range.deleteContents();
-        const fragment = range.createContextualFragment(html);
+        
+        if (!selection.isCollapsed) {
+          // Replace selection with image
+          range.deleteContents();
+        }
+        
+        // Insert image with space after
+        const fragment = range.createContextualFragment(htmlWithSpace);
         range.insertNode(fragment);
         
-        // Move cursor after inserted content
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
+        // Move cursor to the paragraph after image
+        const lastChild = fragment.lastChild;
+        if (lastChild && lastChild.nodeType === Node.ELEMENT_NODE) {
+          const newRange = document.createRange();
+          newRange.setStart(lastChild, 0);
+          newRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+        } else {
+          // Fallback: move cursor after inserted content
+          range.collapse(false);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
       } else {
-        // Insert at end of content
-        const currentContent = context.getContent();
-        context.setContent(currentContent + html);
+        // No selection - insert at end of content
+        // Get current HTML directly from editor element, not from state
+        const currentHTML = editorElement.innerHTML || '';
+        const fragment = document.createRange().createContextualFragment(htmlWithSpace);
+        
+        // Append to editor
+        editorElement.appendChild(fragment);
+        
+        // Update content state
+        const newContent = editorElement.innerHTML;
+        context.setContent(newContent);
+        
+        // Set cursor at end
+        setTimeout(() => {
+          const range = document.createRange();
+          range.selectNodeContents(editorElement);
+          range.collapse(false);
+          const newSelection = window.getSelection();
+          if (newSelection) {
+            newSelection.removeAllRanges();
+            newSelection.addRange(range);
+          }
+        }, 0);
       }
+      
+      // Restore focus to editor
+      setTimeout(() => {
+        editorElement.focus();
+      }, 0);
       
       debugLog('IMAGE', 'Image inserted successfully');
     };
