@@ -19,6 +19,8 @@ interface EditorContextValue {
   getEditorInstance: () => EditorInstance | null;
   viewSource: boolean;
   toggleViewSource: () => void;
+  updateToolbar: () => void;
+  selectionUpdate: number;
 }
 
 const EditorContext = createContext<EditorContextValue | null>(null);
@@ -48,6 +50,7 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
   const [commands, setCommands] = useState<Map<string, EditorCommand>>(new Map());
   const [toolbarButtons, setToolbarButtons] = useState<ToolbarButton[]>([]);
   const [viewSource, setViewSource] = useState(false);
+  const [selectionUpdate, setSelectionUpdate] = useState(0); // Force toolbar re-render on selection change
   const editorRef = useRef<HTMLDivElement>(null);
 
   const registerPlugin = useCallback((plugin: EditorPlugin) => {
@@ -115,6 +118,11 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
     });
   }, []);
 
+  // Function to trigger toolbar update (called on selection change)
+  const updateToolbar = useCallback(() => {
+    setSelectionUpdate(prev => prev + 1);
+  }, []);
+
   const getEditorInstance = useCallback((): EditorInstance | null => {
     if (!editorRef.current) return null;
 
@@ -167,7 +175,9 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
     editorRef,
     getEditorInstance,
     viewSource,
-    toggleViewSource
+    toggleViewSource,
+    updateToolbar,
+    selectionUpdate
   };
 
   return <EditorContext.Provider value={value}>{children}</EditorContext.Provider>;

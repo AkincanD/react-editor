@@ -2,6 +2,7 @@ import React from 'react';
 import { useEditor } from '../context/EditorContext';
 import { ToolbarButton as ToolbarButtonType } from '../types';
 import { debugLog } from '../utils/logger';
+import { ColorButton } from '../plugins/color';
 
 interface ToolbarProps {
   buttons?: ToolbarButtonType[];
@@ -10,7 +11,12 @@ interface ToolbarProps {
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({ buttons: customButtons, className = '', showSourceButton = false }) => {
-  const { toolbarButtons, execCommand, viewSource, toggleViewSource } = useEditor();
+  const { toolbarButtons, execCommand, viewSource, toggleViewSource, selectionUpdate, updateToolbar } = useEditor();
+  
+  // Force re-render when selection changes (selectionUpdate changes)
+  // This ensures isActive functions are re-evaluated
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _ = selectionUpdate; // Use selectionUpdate to trigger re-render
 
   const buttons = customButtons || toolbarButtons;
 
@@ -50,6 +56,69 @@ export const Toolbar: React.FC<ToolbarProps> = ({ buttons: customButtons, classN
           {index > 0 && <div className="reactEditor_toolbarSeparator" />}
           {groupButtons.map(button => {
             const isActive = button.isActive ? button.isActive() : false;
+            
+            // Special handling for color buttons
+            if (button.id === 'textColor' || button.id === 'backgroundColor') {
+              return (
+                <ColorButton
+                  key={button.id}
+                  id={button.id}
+                  label={button.label || ''}
+                  title={button.title || ''}
+                  icon={button.icon}
+                  type={button.id === 'textColor' ? 'text' : 'background'}
+                  isActive={button.isActive || (() => false)}
+                  onColorSelect={(color, type) => {
+                    const selection = window.getSelection();
+                    if (!selection || selection.rangeCount === 0) return;
+                    
+                    const range = selection.getRangeAt(0);
+                    if (type === 'text') {
+                      if (range.collapsed) {
+                        // @ts-ignore - document.execCommand is deprecated but still needed for contentEditable
+                        document.execCommand('foreColor', false, color);
+                      } else {
+                        const span = document.createElement('span');
+                        span.style.color = color;
+                        try {
+                          range.surroundContents(span);
+                        } catch (e) {
+                          // @ts-ignore - document.execCommand is deprecated but still needed for contentEditable
+                          document.execCommand('foreColor', false, color);
+                        }
+                      }
+                    } else {
+                      if (range.collapsed) {
+                        if (color === 'transparent') {
+                          // @ts-ignore - document.execCommand is deprecated but still needed for contentEditable
+                          document.execCommand('backColor', false, 'transparent');
+                        } else {
+                          // @ts-ignore - document.execCommand is deprecated but still needed for contentEditable
+                          document.execCommand('backColor', false, color);
+                        }
+                      } else {
+                        const span = document.createElement('span');
+                        span.style.backgroundColor = color === 'transparent' ? 'transparent' : color;
+                        try {
+                          range.surroundContents(span);
+                        } catch (e) {
+                          if (color === 'transparent') {
+                            // @ts-ignore - document.execCommand is deprecated but still needed for contentEditable
+                            document.execCommand('backColor', false, 'transparent');
+                          } else {
+                            // @ts-ignore - document.execCommand is deprecated but still needed for contentEditable
+                            document.execCommand('backColor', false, color);
+                          }
+                        }
+                      }
+                    }
+                    // Trigger toolbar update
+                    updateToolbar();
+                  }}
+                />
+              );
+            }
+            
             return (
               <button
                 key={button.id}

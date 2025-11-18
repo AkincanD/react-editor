@@ -20,6 +20,8 @@ A powerful, extensible, and beautiful rich text editor for React with TypeScript
 - 🐛 **Debug Console** - Advanced debugging tools for development
 - ⚡ **Next.js Ready** - Perfect integration with Next.js
 - 📦 **Lightweight** - Minimal dependencies, optimized bundle size
+- ✨ **Smart Toolbar** - Real-time active state detection for all buttons
+- ⚡ **High Performance** - Optimized typing experience with zero lag
 
 ## 📦 Installation
 
@@ -95,6 +97,8 @@ import {
 - **Alignment**: Left, Center, Right, Justify
 - **Links**: Modal-based link insertion with custom text
 - **Videos**: Responsive video embedding (YouTube & Vimeo)
+- **Images**: Image insertion with URL, alt text, and custom dimensions
+- **Colors**: Text and background color selection with color picker
 
 [Learn more about plugins →](https://kuardscreative.gitbook.io/react-editor/plugins)
 

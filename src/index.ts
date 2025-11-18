@@ -37,10 +37,12 @@ export {
   linksPlugin,
   videoPlugin,
   imagePlugin,
+  colorPlugin,
   defaultPlugins,
   LinkModalWrapper,
   VideoModalWrapper,
-  ImageModalWrapper
+  ImageModalWrapper,
+  ColorButton
 } from './plugins';
 
 // Styles

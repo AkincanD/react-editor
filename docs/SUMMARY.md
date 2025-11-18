@@ -22,6 +22,8 @@
 
 * [Link Insertion](features/link-insertion.md)
 * [Video Embedding](features/video-embedding.md)
+* [Color Selection](features/color-selection.md)
+* [Toolbar Active States](features/toolbar-active-states.md)
 
 ## Plugins
 

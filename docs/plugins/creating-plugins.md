@@ -49,16 +49,88 @@ toolbarButtons: [
 
 ### Button with Active State
 
+The `isActive` function is called automatically when the selection changes to update the button's visual state. Use modern DOM APIs instead of deprecated `document.queryCommandState`.
+
+**Bold Example:**
 ```tsx
 {
   id: 'bold',
   label: 'B',
   title: 'Bold',
   command: 'bold',
-  isActive: () => document.queryCommandState('bold'),
+  isActive: () => {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return false;
+    const node = selection.anchorNode;
+    if (!node) return false;
+    const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+    if (!element) return false;
+    const computedStyle = window.getComputedStyle(element);
+    return computedStyle.fontWeight === '700' || computedStyle.fontWeight === 'bold' || parseInt(computedStyle.fontWeight) >= 700;
+  },
   group: 'formatting'
 }
 ```
+
+**Heading Example:**
+```tsx
+{
+  id: 'h1',
+  label: 'H1',
+  title: 'Heading 1',
+  command: 'formatBlock',
+  value: '<h1>',
+  isActive: () => {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return false;
+    const node = selection.anchorNode;
+    if (!node) return false;
+    const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+    return element?.tagName === 'H1';
+  }
+}
+```
+
+**Alignment Example:**
+```tsx
+{
+  id: 'alignCenter',
+  label: 'Center',
+  title: 'Align Center',
+  command: 'justifyCenter',
+  isActive: () => {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return false;
+    const node = selection.anchorNode;
+    if (!node) return false;
+    const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+    if (!element) return false;
+    const computedStyle = window.getComputedStyle(element);
+    return computedStyle.textAlign === 'center';
+  }
+}
+```
+
+**List Example:**
+```tsx
+{
+  id: 'bulletList',
+  label: '• List',
+  title: 'Bullet List',
+  command: 'insertUnorderedList',
+  isActive: () => {
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return false;
+    const node = selection.anchorNode;
+    if (!node) return false;
+    const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+    if (!element) return false;
+    return element.closest('ul') !== null;
+  }
+}
+```
+
+> **Note:** The toolbar automatically updates when the selection changes, so your `isActive` function will be called in real-time to reflect the current formatting state.
 
 ### Button with Custom Icon
 

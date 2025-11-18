@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.9] - 2025-11-18
+
+### Added
+- **Color Selection Plugin**: New lightweight color selection feature for text and background colors
+  - Text color button with dropdown color picker (not modal)
+  - Background color button with dropdown color picker (not modal)
+  - Predefined color palette with 24 colors (4x6 grid)
+  - "More Colors" option for custom color selection
+  - HTML5 color input for precise color selection
+  - Hex color code input field
+  - "No Color" option for background (transparent)
+  - Fast, lightweight dropdown (popover style)
+  - Active state detection for color buttons
+  - Integrated with default plugins
+
+### Improved
+- **Plugin System**: Added `colorPlugin` to default plugins
+- **Color Picker UX**: Changed from modal to lightweight dropdown for better performance
+- **Performance**: Color picker is now instant and non-intrusive
+
+## [1.0.8] - 2025-11-18
+
+### Fixed
+- **Toolbar Button Active States**: Fixed toolbar buttons not showing active state when format is applied
+  - Headings (H1, H2, H3, P) now correctly show active state when selected text is in that format
+  - Alignment buttons (Left, Center, Right, Justify) now correctly show active state
+  - Link button now shows active state when cursor is inside a link
+  - Unlink button now shows active state when cursor is inside a link
+  - Toolbar now updates in real-time when selection changes
+  - Fixed issue where clicking an already active format button would apply it again (e.g., H1 → H2)
+
+### Added
+- **Real-time Toolbar Updates**: Toolbar buttons now update automatically when selection changes
+  - Selection change detection via `selectionchange` event
+  - Mouse and keyboard event listeners for immediate feedback
+  - Smooth, non-blocking updates using React state
+
+### Improved
+- **Performance Optimization**: Fixed typing lag by preventing unnecessary DOM updates
+  - User input no longer triggers unnecessary `innerHTML` updates
+  - `onChange` callback moved to `requestAnimationFrame` for non-blocking execution
+  - Removed debug logging from input handler for better performance
+
 ## [1.0.7] - 2025-11-18
 
 ### Fixed

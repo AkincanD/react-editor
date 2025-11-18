@@ -16,7 +16,17 @@ export const alignmentPlugin: EditorPlugin = {
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h8m-8 6h16" />
         </svg>
-      )
+      ),
+      isActive: () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const node = selection.anchorNode;
+        if (!node) return false;
+        const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+        if (!element) return false;
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.textAlign === 'left' || (!computedStyle.textAlign || computedStyle.textAlign === 'start');
+      }
     },
     {
       id: 'alignCenter',
@@ -29,7 +39,17 @@ export const alignmentPlugin: EditorPlugin = {
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M8 12h8M6 18h12" />
         </svg>
-      )
+      ),
+      isActive: () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const node = selection.anchorNode;
+        if (!node) return false;
+        const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+        if (!element) return false;
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.textAlign === 'center';
+      }
     },
     {
       id: 'alignRight',
@@ -42,7 +62,17 @@ export const alignmentPlugin: EditorPlugin = {
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M12 12h8M4 18h16" />
         </svg>
-      )
+      ),
+      isActive: () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const node = selection.anchorNode;
+        if (!node) return false;
+        const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+        if (!element) return false;
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.textAlign === 'right' || computedStyle.textAlign === 'end';
+      }
     },
     {
       id: 'alignJustify',
@@ -55,7 +85,17 @@ export const alignmentPlugin: EditorPlugin = {
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-      )
+      ),
+      isActive: () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const node = selection.anchorNode;
+        if (!node) return false;
+        const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+        if (!element) return false;
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.textAlign === 'justify';
+      }
     }
   ],
   commands: [

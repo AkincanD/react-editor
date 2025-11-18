@@ -304,9 +304,49 @@ const customButton: ToolbarButton = {
   onClick: () => {
     console.log('Custom button clicked!');
   },
-  isActive: () => false,
+  isActive: () => {
+    // Check if button should be active based on current selection
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return false;
+    // Your custom logic here
+    return false;
+  },
   disabled: false
 };
+```
+
+**isActive Function:**
+The `isActive` function is called automatically when the selection changes. Use modern DOM APIs instead of deprecated `document.queryCommandState`:
+
+```tsx
+// ✅ Good - Using getComputedStyle
+isActive: () => {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0) return false;
+  const node = selection.anchorNode;
+  if (!node) return false;
+  const element = node.nodeType === Node.TEXT_NODE 
+    ? node.parentElement 
+    : node as HTMLElement;
+  if (!element) return false;
+  const computedStyle = window.getComputedStyle(element);
+  return computedStyle.fontWeight === '700';
+}
+
+// ✅ Good - Using DOM structure
+isActive: () => {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0) return false;
+  const node = selection.anchorNode;
+  if (!node) return false;
+  const element = node.nodeType === Node.TEXT_NODE 
+    ? node.parentElement 
+    : node as HTMLElement;
+  return element?.tagName === 'H1';
+}
+
+// ❌ Bad - Deprecated API
+isActive: () => document.queryCommandState('bold')
 ```
 
 ### EditorCommand

@@ -13,7 +13,16 @@ export const basicFormattingPlugin: EditorPlugin = {
       group: 'formatting',
       order: 1,
       icon: <span className="font-bold">B</span>,
-      isActive: () => document.queryCommandState('bold')
+      isActive: () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const node = selection.anchorNode;
+        if (!node) return false;
+        const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+        if (!element) return false;
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.fontWeight === '700' || computedStyle.fontWeight === 'bold' || parseInt(computedStyle.fontWeight) >= 700;
+      }
     },
     {
       id: 'italic',
@@ -23,7 +32,16 @@ export const basicFormattingPlugin: EditorPlugin = {
       group: 'formatting',
       order: 2,
       icon: <span className="italic">I</span>,
-      isActive: () => document.queryCommandState('italic')
+      isActive: () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const node = selection.anchorNode;
+        if (!node) return false;
+        const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+        if (!element) return false;
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.fontStyle === 'italic' || computedStyle.fontStyle === 'oblique';
+      }
     },
     {
       id: 'underline',
@@ -33,7 +51,16 @@ export const basicFormattingPlugin: EditorPlugin = {
       group: 'formatting',
       order: 3,
       icon: <span className="underline">U</span>,
-      isActive: () => document.queryCommandState('underline')
+      isActive: () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const node = selection.anchorNode;
+        if (!node) return false;
+        const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+        if (!element) return false;
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.textDecorationLine?.includes('underline') || computedStyle.textDecoration?.includes('underline');
+      }
     },
     {
       id: 'strikethrough',
@@ -43,7 +70,16 @@ export const basicFormattingPlugin: EditorPlugin = {
       group: 'formatting',
       order: 4,
       icon: <span className="line-through">S</span>,
-      isActive: () => document.queryCommandState('strikeThrough')
+      isActive: () => {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return false;
+        const node = selection.anchorNode;
+        if (!node) return false;
+        const element = node.nodeType === Node.TEXT_NODE ? node.parentElement : node as HTMLElement;
+        if (!element) return false;
+        const computedStyle = window.getComputedStyle(element);
+        return computedStyle.textDecorationLine?.includes('line-through') || computedStyle.textDecoration?.includes('line-through');
+      }
     }
   ],
   commands: [

@@ -72,11 +72,31 @@ interface ToolbarButton {
   title?: string;                // Tooltip text
   command?: string;              // Command to execute
   value?: unknown;               // Value to pass to command
-  isActive?: () => boolean;      // Check if button is active
+  isActive?: () => boolean;      // Check if button is active (called on selection change)
   onClick?: () => void;          // Click handler
   group?: string;                // Button group name
   order?: number;                // Display order
   disabled?: boolean;            // Disable button
+}
+```
+
+**isActive Function:**
+The `isActive` function is automatically called when the selection changes to update the button's visual state. Use modern DOM APIs to check formatting:
+
+```typescript
+isActive: () => {
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0) return false;
+  const node = selection.anchorNode;
+  if (!node) return false;
+  const element = node.nodeType === Node.TEXT_NODE 
+    ? node.parentElement 
+    : node as HTMLElement;
+  if (!element) return false;
+  
+  // Check formatting using getComputedStyle or DOM structure
+  const computedStyle = window.getComputedStyle(element);
+  return computedStyle.fontWeight === '700'; // Example for bold
 }
 ```
 

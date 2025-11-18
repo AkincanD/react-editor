@@ -18,7 +18,7 @@ export const EditorContent: React.FC<EditorContentProps> = ({
   onBlur,
   onFocus
 }) => {
-  const { content, setContent, editorRef, viewSource } = useEditor();
+  const { content, setContent, editorRef, viewSource, updateToolbar } = useEditor();
 
   // Track if update is from user input to prevent unnecessary innerHTML updates
   const isUserInputRef = React.useRef(false);
@@ -274,6 +274,39 @@ export const EditorContent: React.FC<EditorContentProps> = ({
       editorRef.current.innerHTML = content;
     }
   }, [content, editorRef, viewSource]);
+
+  // Listen to selection changes to update toolbar active states
+  useEffect(() => {
+    if (!editorRef.current || viewSource || readOnly) return;
+
+    const editor = editorRef.current;
+    
+    const handleSelectionChange = () => {
+      // Update toolbar to re-evaluate isActive functions
+      updateToolbar();
+    };
+
+    // Listen to selection changes
+    document.addEventListener('selectionchange', handleSelectionChange);
+    
+    // Also listen to mouseup and keyup in editor
+    const handleMouseUp = () => {
+      setTimeout(handleSelectionChange, 0);
+    };
+    
+    const handleKeyUp = () => {
+      setTimeout(handleSelectionChange, 0);
+    };
+
+    editor.addEventListener('mouseup', handleMouseUp);
+    editor.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      document.removeEventListener('selectionchange', handleSelectionChange);
+      editor.removeEventListener('mouseup', handleMouseUp);
+      editor.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [editorRef, viewSource, readOnly, updateToolbar]);
 
   return (
     <div className={`reactEditor_content ${className}`}>

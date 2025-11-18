@@ -1,6 +1,6 @@
 # Built-in Plugins
 
-React Editor comes with 5 powerful built-in plugins.
+React Editor comes with 8 powerful built-in plugins.
 
 ## Overview
 
@@ -11,6 +11,9 @@ import {
   listsPlugin,
   alignmentPlugin,
   linksPlugin,
+  videoPlugin,
+  imagePlugin,
+  colorPlugin,
   defaultPlugins  // All plugins combined
 } from '@akincand/react-editor';
 ```
