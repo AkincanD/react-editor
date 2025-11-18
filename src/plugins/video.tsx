@@ -43,7 +43,8 @@ const parseVideoUrl = (url: string): { provider: string; videoId: string; url?: 
 // Generate embed URL or return direct URL
 const getEmbedUrl = (provider: string, videoId: string, directUrl?: string): string => {
   if (provider === 'youtube') {
-    return `https://www.youtube.com/embed/${videoId}`;
+    // YouTube embed with proper parameters
+    return `https://www.youtube.com/embed/${videoId}?rel=0`;
   } else if (provider === 'vimeo') {
     return `https://player.vimeo.com/video/${videoId}`;
   } else if (provider === 'direct' && directUrl) {
