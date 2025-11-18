@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2025-11-18
+
+### Fixed
+- **YouTube Embed URL**: Updated to use proper embed format with query parameters
+  - Changed from `https://www.youtube.com/embed/${videoId}` to `https://www.youtube.com/embed/${videoId}?rel=0`
+  - Matches YouTube's standard embed code format
+- **Source View Height**: Fixed source view textarea height issue
+  - Added `min-height: 300px` to prevent short display
+  - Added `resize: vertical` for manual adjustment
+  - Added `box-sizing: border-box` for proper padding calculation
+  - Source view now matches editor height, no scroll needed
+- **Dark Mode Modal Styling**: Fixed modal colors in dark mode
+  - Input background color changed from `#1a1a1a` to `#2d2d2d` for better contrast
+  - Added dark mode styles for primary buttons with proper gradients
+  - Fixed secondary button hover states in dark mode
+  - Improved overall color consistency across all modal elements
+  - Better visibility and readability in dark theme
+
+### Improved
+- Better button gradients in dark mode
+- Enhanced hover states for form elements
+- Improved overall dark mode user experience
+
 ## [1.0.5] - 2025-11-17
 
 ### Added
