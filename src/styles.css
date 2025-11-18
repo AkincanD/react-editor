@@ -549,6 +549,7 @@
   animation: reactEditor_slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.reactEditor_modal.reactEditor_dark,
 .reactEditor_dark .reactEditor_modal {
   background-color: var(--reactEditor-bg-dark);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 
@@ -564,6 +565,7 @@
   flex-shrink: 0;
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_modalHeader,
 .reactEditor_dark .reactEditor_modalHeader {
   border-bottom-color: var(--reactEditor-border-dark);
 }
@@ -576,6 +578,7 @@
   letter-spacing: -0.01em;
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_modalTitle,
 .reactEditor_dark .reactEditor_modalTitle {
   color: var(--reactEditor-text-dark);
 }
@@ -597,6 +600,7 @@
   line-height: 1;
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_modalCloseButton,
 .reactEditor_dark .reactEditor_modalCloseButton {
   color: #9ca3af;
 }
@@ -607,6 +611,7 @@
   transform: scale(1.05);
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_modalCloseButton:hover,
 .reactEditor_dark .reactEditor_modalCloseButton:hover {
   background-color: var(--reactEditor-hover-dark);
   color: var(--reactEditor-text-dark);
@@ -629,6 +634,7 @@
   flex-shrink: 0;
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_modalFooter,
 .reactEditor_dark .reactEditor_modalFooter {
   border-top-color: var(--reactEditor-border-dark);
   background-color: var(--reactEditor-toolbar-dark);
@@ -650,6 +656,7 @@
   color: var(--reactEditor-text-light);
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_label,
 .reactEditor_dark .reactEditor_label {
   color: var(--reactEditor-text-dark);
 }
@@ -666,6 +673,7 @@
   font-family: inherit;
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_input,
 .reactEditor_dark .reactEditor_input {
   background-color: #2d2d2d;
   color: var(--reactEditor-text-dark);
@@ -676,6 +684,7 @@
   border-color: #9ca3af;
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_input:hover,
 .reactEditor_dark .reactEditor_input:hover {
   border-color: #6b7280;
 }
@@ -686,6 +695,7 @@
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_input:focus,
 .reactEditor_dark .reactEditor_input:focus {
   border-color: #60a5fa;
   box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
@@ -695,6 +705,7 @@
   color: var(--reactEditor-placeholder-light);
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_input::placeholder,
 .reactEditor_dark .reactEditor_input::placeholder {
   color: var(--reactEditor-placeholder-dark);
 }
@@ -740,6 +751,7 @@
   box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_buttonPrimary,
 .reactEditor_dark .reactEditor_buttonPrimary {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
@@ -751,6 +763,7 @@
   transform: translateY(-1px);
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_buttonPrimary:hover:not(:disabled),
 .reactEditor_dark .reactEditor_buttonPrimary:hover:not(:disabled) {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   box-shadow: 0 4px 6px rgba(59, 130, 246, 0.4);
@@ -766,6 +779,7 @@
   border: 1.5px solid var(--reactEditor-border-light);
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_buttonSecondary,
 .reactEditor_dark .reactEditor_buttonSecondary {
   background-color: var(--reactEditor-hover-dark);
   color: var(--reactEditor-text-dark);
@@ -778,6 +792,7 @@
   transform: translateY(-1px);
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_buttonSecondary:hover:not(:disabled),
 .reactEditor_dark .reactEditor_buttonSecondary:hover:not(:disabled) {
   background-color: #3d3d3d;
   border-color: #6b7280;
@@ -816,6 +831,7 @@
   font-weight: 500;
 }
 
+.reactEditor_modal.reactEditor_dark .reactEditor_checkboxLabel,
 .reactEditor_dark .reactEditor_checkboxLabel {
   color: var(--reactEditor-text-dark);
 }
