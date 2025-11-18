@@ -237,7 +237,6 @@ export const imagePlugin: EditorPlugin = {
       } else {
         // No selection - insert at end of content
         // Get current HTML directly from editor element, not from state
-        const currentHTML = editorElement.innerHTML || '';
         const fragment = document.createRange().createContextualFragment(htmlWithSpace);
         
         // Append to editor
