@@ -89,16 +89,16 @@ const VideoModal: React.FC<{
     if (videoInfo.provider === 'direct') {
       // Direct video file (HTML5 video element)
       if (showAdvanced && width && height) {
-        html = `<div class="reactEditor_videoWrapper" contenteditable="false" style="width: ${width}; padding-bottom: 0; height: ${height};"><video controls style="width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
+        html = `<div class="reactEditor_videoWrapper" contenteditable="false" draggable="true" style="width: ${width}; padding-bottom: 0; height: ${height};"><video controls style="width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
       } else {
-        html = `<div class="reactEditor_videoWrapper" contenteditable="false"><video controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
+        html = `<div class="reactEditor_videoWrapper" contenteditable="false" draggable="true"><video controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;"><source src="${embedUrl}" type="video/mp4">Your browser does not support the video tag.</video></div>`;
       }
     } else {
       // YouTube or Vimeo (iframe)
       if (showAdvanced && width && height) {
-        html = `<div class="reactEditor_videoWrapper" contenteditable="false" style="width: ${width}; padding-bottom: 0; height: ${height};"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        html = `<div class="reactEditor_videoWrapper" contenteditable="false" draggable="true" style="width: ${width}; padding-bottom: 0; height: ${height};"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
       } else {
-        html = `<div class="reactEditor_videoWrapper" contenteditable="false"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
+        html = `<div class="reactEditor_videoWrapper" contenteditable="false" draggable="true"><iframe src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>`;
       }
     }
 
@@ -241,60 +241,63 @@ export const videoPlugin: EditorPlugin = {
       const editorElement = editor.getEditorElement();
       if (!editorElement) return;
       
+      // Ensure editor has focus
+      editorElement.focus();
+      
       // Add a space after video for cursor placement
       const htmlWithSpace = html + '<p><br></p>';
       
+      // Get selection and ensure it's within editor
       const selection = window.getSelection();
+      let range: Range;
+      
       if (selection && selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        
-        if (!selection.isCollapsed) {
-          // Replace selection with video
-          range.deleteContents();
+        range = selection.getRangeAt(0);
+        // Check if range is within editor
+        if (!editorElement.contains(range.commonAncestorContainer)) {
+          // Range is outside editor, create new range at end
+          range = document.createRange();
+          range.selectNodeContents(editorElement);
+          range.collapse(false);
         }
-        
-        // Insert video with space after
-        const fragment = range.createContextualFragment(htmlWithSpace);
-        range.insertNode(fragment);
-        
-        // Move cursor to the paragraph after video
-        const lastChild = fragment.lastChild;
-        if (lastChild && lastChild.nodeType === Node.ELEMENT_NODE) {
-          const newRange = document.createRange();
-          newRange.setStart(lastChild, 0);
-          newRange.collapse(true);
+      } else {
+        // No selection - create range at end
+        range = document.createRange();
+        range.selectNodeContents(editorElement);
+        range.collapse(false);
+      }
+      
+      // Delete selected content if any
+      if (!selection?.isCollapsed && selection) {
+        range.deleteContents();
+      }
+      
+      // Insert video with space after
+      const fragment = range.createContextualFragment(htmlWithSpace);
+      range.insertNode(fragment);
+      
+      // Move cursor to the paragraph after video
+      const lastChild = fragment.lastChild;
+      if (lastChild && lastChild.nodeType === Node.ELEMENT_NODE) {
+        const newRange = document.createRange();
+        newRange.setStart(lastChild, 0);
+        newRange.collapse(true);
+        if (selection) {
           selection.removeAllRanges();
           selection.addRange(newRange);
-        } else {
-          // Fallback: move cursor after inserted content
-          range.collapse(false);
+        }
+      } else {
+        // Fallback: move cursor after inserted content
+        range.collapse(false);
+        if (selection) {
           selection.removeAllRanges();
           selection.addRange(range);
         }
-      } else {
-        // No selection - insert at end of content
-        // Get current HTML directly from editor element, not from state
-        const fragment = document.createRange().createContextualFragment(htmlWithSpace);
-        
-        // Append to editor
-        editorElement.appendChild(fragment);
-        
-        // Update content state
-        const newContent = editorElement.innerHTML;
-        context.setContent(newContent);
-        
-        // Set cursor at end
-        setTimeout(() => {
-          const range = document.createRange();
-          range.selectNodeContents(editorElement);
-          range.collapse(false);
-          const newSelection = window.getSelection();
-          if (newSelection) {
-            newSelection.removeAllRanges();
-            newSelection.addRange(range);
-          }
-        }, 0);
       }
+      
+      // Update content state
+      const newContent = editorElement.innerHTML;
+      context.setContent(newContent);
       
       // Restore focus to editor
       setTimeout(() => {
