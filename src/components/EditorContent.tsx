@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
 import { useEditor } from '../context/EditorContext';
-import { debugLog } from '../utils/logger';
 
 interface EditorContentProps {
   placeholder?: string;
@@ -21,15 +20,20 @@ export const EditorContent: React.FC<EditorContentProps> = ({
 }) => {
   const { content, setContent, editorRef, viewSource } = useEditor();
 
+  // Track if update is from user input to prevent unnecessary innerHTML updates
+  const isUserInputRef = React.useRef(false);
+
   const handleInput = useCallback((e: React.FormEvent<HTMLDivElement>) => {
     const newContent = e.currentTarget.innerHTML;
-    debugLog('CONTENT', 'Content changed (visual mode)', {
-      length: newContent.length,
-      preview: newContent.substring(0, 50) + (newContent.length > 50 ? '...' : '')
-    });
+    // Mark as user input to prevent useEffect from updating innerHTML
+    isUserInputRef.current = true;
+    // Update state immediately
     setContent(newContent);
+    // Call onChange in next tick to avoid blocking UI
     if (onChange) {
-      onChange(newContent);
+      requestAnimationFrame(() => {
+        onChange(newContent);
+      });
     }
   }, [setContent, onChange]);
 
@@ -249,18 +253,24 @@ export const EditorContent: React.FC<EditorContentProps> = ({
 
   const handleSourceChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
-    debugLog('CONTENT', 'Content changed (source mode)', {
-      length: newContent.length,
-      preview: newContent.substring(0, 50) + (newContent.length > 50 ? '...' : '')
-    });
     setContent(newContent);
     if (onChange) {
       onChange(newContent);
     }
   }, [setContent, onChange]);
 
+  // Only update innerHTML when content changes externally (not from user input)
   useEffect(() => {
-    if (editorRef.current && content !== editorRef.current.innerHTML && !viewSource) {
+    if (!editorRef.current || viewSource) return;
+    
+    // Skip if this update is from user input (handleInput already updated the DOM)
+    if (isUserInputRef.current) {
+      isUserInputRef.current = false;
+      return;
+    }
+    
+    // Only update if content is different (external change)
+    if (content !== editorRef.current.innerHTML) {
       editorRef.current.innerHTML = content;
     }
   }, [content, editorRef, viewSource]);
